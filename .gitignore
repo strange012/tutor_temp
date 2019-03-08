@@ -1,0 +1,6 @@
+venv
+banner_editor/static
+*.pyc
+*/*.pyc
+.vscode
+banner_editor.egg-info
