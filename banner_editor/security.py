@@ -77,12 +77,13 @@ class Consumer(User):
     )
     def to_json(self):
         return {
+            'consumer_id' : self.id,
             'first_name' : self.first_name,
             'second_name' : self.second_name,
             'email' : self.email,
             'gender' : self.gender,
-            'interests' : DBSession.query(CourseCategory.id).filter(CourseCategory in self.interests).all(),
-            'fav_courses' : DBSession.query(Course.id).filter(Course in self.fav_courses).all()
+            'interests' : [cat.id for cat in self.interests],
+            'fav_courses' : [course.id for course in self.fav_courses]
         }
 
 class Provider(User):
@@ -96,14 +97,15 @@ class Provider(User):
     about = Column(String, nullable=False)
     courses = relationship('Course', backref='provider')
 
-
-# class Group(Base):
-#     __tablename__ = 'group'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String, nullable=False, unique=True)
-#     users = relationship('User', backref='group')
-#     def __str__(self):
-#         return 'group:' + self.name
+    def to_json(self):
+        return {
+            'provider_id' : self.id,
+            'email' : self.email,
+            'name' : self.name,
+            'website' : self.website,
+            'about' : self.about,
+            'courses' : [course.id for course in self.courses]
+        }
 
 
 def hash_password(pw):

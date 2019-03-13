@@ -57,6 +57,19 @@ class Course(Base):
     complexity = Column(Integer)
     image = Column(Text)
     lessons = relationship('Lesson', backref='course')
+    
+    def to_json(self):
+        return {
+            'course_id' : self.id,
+            'name' : self.name,
+            'author' : self.author,
+            'provider_id' : self.provider_id,
+            'description' : self.description,
+            'complexity' : self.complexity,
+            'lessons' : [lesson.id for lesson in self.lessons],
+            'course_categories' : [cat.id for cat in self.course_categories],
+            'favs' : [user.id for user in self.users]
+        }
 
 class Lesson(Base):
     __tablename__ = 'lesson'
@@ -64,6 +77,14 @@ class Lesson(Base):
     name = Column(String, nullable=False)
     teacher_id = Column(Integer, ForeignKey('teacher.id'))
     course_id = Column(Integer, ForeignKey('course.id'))
+    def to_json(self):
+        return {
+            'lesson_id' : self.id,
+            'name' : self.name,
+            'course_id' : self.course_id,
+            'teacher_id' : self.teacher_id
+        }
+
 
 class Teacher(Base):
     __tablename__ = 'teacher'
@@ -71,6 +92,13 @@ class Teacher(Base):
     first_name = Column(String, nullable=False)
     second_name = Column(String, nullable=False)
     lessons = relationship('Lesson', backref='teacher')
+    def to_json(self):
+        return {
+            'teacher_id' : self.id,
+            'first_name' : self.first_name,
+            'second_name' : self.second_name,
+            'lessons' : [lesson.id for lesson in self.lessons]
+        }
 
 class CourseCategory(Base):
     __tablename__ = 'course_category'
@@ -78,96 +106,11 @@ class CourseCategory(Base):
     name = Column(String, nullable=False, unique=True)
     description = Column(String)
 
-class Banner(Base):
-    __tablename__ = 'banner'
+    def to_json(self):
+        return {
+            'course_category_id' : self.id,
+            'name' : self.name,
+            'description' : self.description,
+            'courses' : [course.id for course in self.courses]
+        }
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    url = Column(Text)
-    image = Column(Text)
-    seq_pos = Sequence(
-        name='seq_pos',
-        metadata=Base.metadata,
-        start=1001,
-        increment=1
-    )
-    enabled = Column(
-        Boolean,
-        nullable=False,
-        default=False,
-        server_default=text('false')
-    )
-    pos = Column(
-        Numeric(20, 10),
-        nullable=False,
-        default=seq_pos.next_value(),
-        server_default=seq_pos.next_value()
-    )
-
-    date_created = Column(
-        DateTime,
-        default=func.now(),
-        nullable=False,
-        server_default=func.now()
-    )
-    date_edited = Column(
-        DateTime,
-        default=func.now(),
-        nullable=False,
-        server_default=func.now(),
-        onupdate=func.now()
-    )
-
-    def full_path(self):
-        if self.image:
-            path = os.path.join(
-                get_current_registry().settings['work.directory'],
-                'banner_editor',
-                'static',
-                'banners',
-                self.image[0] if (self.image[0] in (
-                    string.ascii_letters + string.digits)) else '?',
-                self.image[1] if (self.image[1] in (
-                    string.ascii_letters + string.digits)) else '?',
-                str(self.id)
-            )
-            if not os.path.isdir(path):
-                os.makedirs(path)
-            return path
-        else:
-            return ""
-
-    def static_path(self, size):
-        if self.image:
-            path = os.path.join(
-                'static',
-                'banners',
-                self.image[0] if (self.image[0] in (
-                    string.ascii_letters + string.digits)) else '?',
-                self.image[1] if (self.image[1] in (
-                    string.ascii_letters + string.digits)) else '?',
-                str(self.id)
-            )
-            temp_path = os.path.join(self.full_path(), size)
-            try:
-                if not os.path.isdir(temp_path):
-                    os.mkdir(temp_path)
-                if not os.path.isfile(os.path.join(temp_path, self.image)):
-                    image_resize(self.full_path(), self.image,
-                                 PictureSize[size])
-            except IOError:
-                return ""
-            return os.path.join(os.path.sep, path, size, self.image)
-        else:
-            return ""
-
-
-@event.listens_for(Banner, 'before_delete')
-def receive_before_delete(mapper, connection, target):
-    if target.image:
-        path = target.full_path()
-        if os.path.isdir(path):
-            shutil.rmtree(path)
-
-
-Index('idx_banner_pos', Banner.pos)

@@ -1175,3 +1175,1045 @@ Traceback (most recent call last):
   File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 298, in default
     raise TypeError('%r is not JSON serializable' % (obj,))
 TypeError: <sqlalchemy.orm.query.Query object at 0x7fce930ae9d0> is not JSON serializable
+2019-03-13 02:50:22,993 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 104, in login
+    if request.json_body and form.validate():
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/request.py", line 231, in json_body
+    return json.loads(text_(self.body, self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting property name enclosed in double quotes: line 2 column 2 (char 3)
+2019-03-13 03:43:48,932 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 104, in login
+    if form.validate(form.json_body):
+AttributeError: 'Form' object has no attribute 'json_body'
+2019-03-13 03:44:07,001 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 104, in login
+    if form.validate(request.json_body):
+TypeError: validate() takes exactly 1 argument (2 given)
+2019-03-13 03:44:55,454 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 117, in login
+    'body' : request.json_body
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/request.py", line 231, in json_body
+    return json.loads(text_(self.body, self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting property name enclosed in double quotes: line 2 column 2 (char 3)
+2019-03-13 03:51:18,475 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 104, in login
+    if form.validate(force_validate=True):
+TypeError: validate() got an unexpected keyword argument 'force_validate'
+2019-03-13 03:55:51,263 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 118, in login
+    'json' : request.JSON
+AttributeError: 'Request' object has no attribute 'JSON'
+2019-03-13 03:57:35,302 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 460, in rendered_view
+    request, result, view_inst, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 451, in render_view
+    return self.render_to_response(response, system, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 474, in render_to_response
+    result = self.render(value, system_values, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 470, in render
+    result = renderer(value, system_values)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 284, in _render
+    return self.serializer(value, default=default, **self.kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 251, in dumps
+    sort_keys=sort_keys, **kw).encode(obj)
+  File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 298, in default
+    raise TypeError('%r is not JSON serializable' % (obj,))
+TypeError: NestedMultiDict([]) is not JSON serializable
+2019-03-13 03:58:33,221 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 460, in rendered_view
+    request, result, view_inst, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 451, in render_view
+    return self.render_to_response(response, system, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 474, in render_to_response
+    result = self.render(value, system_values, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 470, in render
+    result = renderer(value, system_values)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 284, in _render
+    return self.serializer(value, default=default, **self.kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 251, in dumps
+    sort_keys=sort_keys, **kw).encode(obj)
+  File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 298, in default
+    raise TypeError('%r is not JSON serializable' % (obj,))
+TypeError: NestedMultiDict([]) is not JSON serializable
+2019-03-13 03:58:53,401 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 460, in rendered_view
+    request, result, view_inst, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 451, in render_view
+    return self.render_to_response(response, system, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 474, in render_to_response
+    result = self.render(value, system_values, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 470, in render
+    result = renderer(value, system_values)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 284, in _render
+    return self.serializer(value, default=default, **self.kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 251, in dumps
+    sort_keys=sort_keys, **kw).encode(obj)
+  File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 298, in default
+    raise TypeError('%r is not JSON serializable' % (obj,))
+TypeError: NestedMultiDict([]) is not JSON serializable
+2019-03-13 04:57:24,171 ERROR [waitress][waitress] Exception when serving /consumer/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 122, in consumer_add
+    return {'msg' :  MESSAGES['request'], 'json' : request.json}
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/request.py", line 715, in _json_body__get
+    return json.loads(self.body.decode(self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting ':' delimiter: line 2 column 12 (char 13)
+2019-03-13 04:59:11,919 ERROR [waitress][waitress] Exception when serving /consumer/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 122, in consumer_add
+    return {'msg' :  MESSAGES['request'], 'err' : e.message, 'json' : request.json}
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/request.py", line 715, in _json_body__get
+    return json.loads(self.body.decode(self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting ':' delimiter: line 6 column 14 (char 131)
+2019-03-13 16:03:12,998 ERROR [waitress][waitress] Exception when serving /consumer/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 106, in consumer_add
+    consumer.password = hash_password(request.json['consumer'])
+KeyError: 'consumer'
+2019-03-13 17:14:50,994 ERROR [waitress][waitress] Exception when serving /consumer/7/edit/fav/1/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 94, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 111, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 218, in consumer_fav_add
+    if course in counsumer.fav_courses:
+NameError: global name 'counsumer' is not defined
+2019-03-13 17:24:19,714 ERROR [waitress][waitress] Exception when serving /consumer/7/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 94, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 210, in consumer_view
+    return consumer.to_json()
+  File "/home/master/banner_editor/banner_editor/security.py", line 85, in to_json
+    'fav_courses' : DBSession.query(Course.id).filter(Course.id in self.fav_courses.id).all()
+AttributeError: 'InstrumentedList' object has no attribute 'id'
+2019-03-13 23:52:48,197 ERROR [waitress][waitress] Exception when serving /course_category/1/courses/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 167, in decorated_function
+    if not course:
+NameError: global name 'course' is not defined
+2019-03-13 23:54:34,150 ERROR [waitress][waitress] Exception when serving /course_category/1/courses/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 167, in decorated_function
+    if not course:
+NameError: global name 'course' is not defined
+2019-03-14 00:28:13,352 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 190, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 503, in course_filter
+    courses = DBSession.query(Course).filter(request.json['search_string'].lower() in Course.name.lower()).all()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/attributes.py", line 230, in __getattr__
+    key,
+AttributeError: Neither 'InstrumentedAttribute' object nor 'Comparator' object associated with Course.name has an attribute 'lower'
+2019-03-14 00:30:56,283 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 190, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 503, in course_filter
+    courses = DBSession.query(Course).filter(func.lower(request.json['search_string']) in func.lower(Course.name)).all()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/operators.py", line 423, in __contains__
+    return self.operate(contains, other)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 727, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/operators.py", line 423, in __contains__
+    return self.operate(contains, other)
+  File "<string>", line 1, in <lambda>
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/type_api.py", line 67, in operate
+    return o[0](self.expr, op, *(other + o[1:]), **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/default_comparator.py", line 237, in _unsupported_impl
+    "Operator '%s' is not supported on " "this expression" % op.__name__
+NotImplementedError: Operator 'contains' is not supported on this expression
+2019-03-14 00:39:56,972 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 190, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 504, in course_filter
+    courses = DBSession.query(Course).filter(Course.name.ilike(request.json["%search_string%"])).all()
+KeyError: '%search_string%'
+2019-03-14 00:45:04,226 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 190, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 503, in course_filter
+    courses = DBSession.query(Course).filter(Course.name.ilike(request.json['search_string']).lower()).all()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 723, in __getattr__
+    % (type(self).__name__, type(self.comparator).__name__, key)
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'lower'
+2019-03-14 00:55:07,546 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 188, in decorated_function
+    validate(instance=request.json, schema=schema)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/request.py", line 715, in _json_body__get
+    return json.loads(self.body.decode(self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Invalid \escape: line 2 column 21 (char 22)
+2019-03-14 00:55:11,566 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 188, in decorated_function
+    validate(instance=request.json, schema=schema)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/request.py", line 715, in _json_body__get
+    return json.loads(self.body.decode(self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Invalid \escape: line 2 column 21 (char 22)
+2019-03-14 00:55:40,605 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 188, in decorated_function
+    validate(instance=request.json, schema=schema)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/request.py", line 715, in _json_body__get
+    return json.loads(self.body.decode(self.charset))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Invalid \escape: line 2 column 21 (char 22)

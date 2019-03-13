@@ -1,26 +1,14 @@
 from pyramid.response import Response
 from pyramid.view import view_config
-from pyramid.httpexceptions import (
-    HTTPFound,
-    HTTPOk,
-    HTTPForbidden,
-    HTTPBadRequest,
-    HTTPInternalServerError
-)
 
 from exceptions import IOError
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func
+from sqlalchemy import func, and_
 
-from formencode import (
-    Schema,
-    validators,
-    FancyValidator,
-    Invalid
-)
+from functools import partial, wraps
 
-from pyramid_simpleform import Form
-from pyramid_simpleform.renderers import FormRenderer
+from jsonschema import validate, exceptions
+
 from pyramid.view import forbidden_view_config
 from pyramid.security import (
     remember,
@@ -31,13 +19,18 @@ from pyramid.security import (
 
 from .models import (
     DBSession,
-    Banner
+    Course,
+    CourseCategory,
+    Lesson,
+    Teacher,
+    course_category_course
 )
 
 from security import (
     User,
     Consumer,
     Provider,
+    consumer_interests,
     check_password,
     hash_password
 )
@@ -50,283 +43,620 @@ import shutil
 import logging
 
 MESSAGES = {
-    'db': 'Database operation is unavailable right now.',
-    'file': 'Unable to save this file right now.',
-    'delete': 'Unable to remove this banner right now.',
-    'id': 'Invalid banner ID in URL.',
-    'move': 'Unable to move this banner right now.',
-    'login': 'Failed to login.'
+    'db': 'Database operation error',
+    'ok': 'You have done well, comrade',
+    'login': 'Failed to login',
+    'request': 'Invalid request structure',
+    'arguments': 'Invalid arguments',
+    'id': 'Invalid ID',
+    'access' : 'No access',
+    'email' : 'Email already exists',
+    'fav_course' : 'Inacceptable favourite course',
+    'course_id' : 'Invalid course ID',
+    'course_category_id' : 'Invalid course category ID',
+    'lesson_id' : 'Invalid lesson ID',
+    'teacher_id' : 'Invalid teacher ID'
 }
 LOG = logging.getLogger(__name__)
 
-class HashedPassword(FancyValidator):
-    def _to_python(self, value, state):
-        return hash_password(validators.UnicodeString(if_missing='').to_python(value))
 
+consumer_schema = {
+    'type' : 'object',
+    'properties' : {
+        'email' : {'type' : 'string'},
+        'password' : {'type' : 'string', 'default' : ''},
+        'first_name' : {'type' : 'string'},
+        'second_name' : {'type' : 'string'},
+        'gender' : {'type' : 'string', 'enum' : ['male', 'female', 'other']},
+        'interests' : {'type' : 'array'}
+    },
+    'required' : ['email', 'password', 'first_name', 'second_name', 'gender']
+}
 
-class ConsumerSchema(Schema):
+provider_schema = {
+    'type' : 'object',
+    'properties' : {
+        'email' : {'type' : 'string'},
+        'password' : {'type' : 'string', 'default' : ''},
+        'name' : {'type' : 'string'},
+        'website' : {'type' : 'string'},
+        'about' : {'type' : 'string'},
+    },
+    'required' : ['email', 'password', 'name', 'website', 'about']
+}
+login_schema = {
+    'type' : 'object',
+    'properties' : {
+        'email' : {'type' : 'string'},
+        'password' : {'type' : 'string'}
+    },
+    'required' : ['email', 'password']
+}
 
-    allow_extra_fields = True
-    filter_extra_fields = True
+course_schema = {
+    'type' : 'object',
+    'properties' : {
+        'name' : {'type' : 'string'},
+        'author' : {'type' : 'string'},
+        'link' : {'type' : 'string'},
+        'description' : {'type' : 'string'},
+        'complexity' : {'type' : 'number'},
+        'course_categories' : {'type' : 'array'}
+    },
+    'required' : ['name', 'author', 'link', 'description', 'complexity', 'course_categories']
+}
 
-    email = validators.UnicodeString(max=255)
-    password = HashedPassword()
-    first_name = validators.UnicodeString(max=255)
-    second_name = validators.UnicodeString(max=255)
-    gender = validators.UnicodeString(max=255)
+course_filter_schema = {
+    'type' : 'object',
+    'properties' : {
+        'search_string' : {'type' : 'string'}
+    },
+    'required' : ['search_string']
+}
 
-# class BannerSchema(Schema):
+course_category_schema = {
+    'type' : 'object',
+    'properties' : {
+        'name' : {'type' : 'string'},
+        'description' : {'type' : 'string'}
+    },
+    'required' : ['name', 'description']
+}
 
-#     allow_extra_fields = True
-#     filter_extra_fields = True
+teacher_schema = {
+    'type' : 'object',
+    'properties' : {
+        'first_name' : {'type' : 'string'},
+        'second_name' : {'type' : 'string'}
+    },
+    'required' : ['first_name', 'second_name']
+}
 
-#     name = validators.UnicodeString(max=255)
-#     url = validators.URL()
-#     pos = validators.Number(min=0, if_missing=Banner.seq_pos.next_value())
-#     enabled = validators.Bool()
+lesson_schema = {
+    'type' : 'object',
+    'properties' : {
+        'name' : {'type' : 'string'},
+        'teacher_id' : {'type' : 'number'},
+        'course_id' : {'type' : 'number'}
+    },
+    'required' : ['name', 'teacher_id', 'course_id']
+}
+def user_id_match(f=None):
+    if f is None:
+        return partial(user_id_match)
 
+    @wraps(f)
+    def decorated_function(request):
+        try:
+            user = DBSession.query(User).get(request.matchdict['id'])
+        except SQLAlchemyError as e:
+            request.response.status = 400
+            return {'msg' :  MESSAGES['id']}
+        if not user:
+            request.response.status = 400
+            return {'msg' :  MESSAGES['id']}
+        if (user.group != 'admin') and (user.email != unauthenticated_userid(request)):
+            request.response.status = 403
+            return {'msg' :  MESSAGES['access']}
+        return f(request)
+    return decorated_function
 
-# class MoveSchema(Schema):
+def obj_id_match(f=None, oid='', Obj=None):
+    if f is None:
+        return partial(obj_id_match, oid=oid, Obj=Obj)
 
-#     allow_extra_fields = True
-#     filter_extra_fields = True
+    @wraps(f)
+    def decorated_function(request):
+        try:
+            obj = DBSession.query(Obj).get(request.matchdict[oid])
+        except SQLAlchemyError as e:
+            request.response.status = 400
+            return {'msg' :  MESSAGES[oid]}
+        if not obj:
+            request.response.status = 400
+            return {'msg' :  MESSAGES[oid]}
+        return f(request)
+    return decorated_function
 
-#     upwards = validators.StringBool()
+def json_match(f=None, schema={}):
+    if f is None:
+        return partial(json_match, schema=schema)
 
+    @wraps(f)
+    def decorated_function(request):
+        try: 
+            validate(instance=request.json, schema=schema)
+            try:
+                return f(request)
+            except SQLAlchemyError as e:
+                LOG.exception(e.message)
+                request.response.status = 500
+                return {'msg' :  MESSAGES['db']}
+        except exceptions.ValidationError as e:
+            request.response.status = 400
+            return {'msg' :  MESSAGES['request'], 'err' : e.message}
+    return decorated_function
 
-class LoginSchema(Schema):
+@view_config(route_name='get_id', permission='view', renderer='json')
+def get_id(request):
+    try:
+        user = DBSession.query(User).filter(User.email == unauthenticated_userid(request)).first()
+        request.response.status = 200
+        return {'id' : user.id}
+    except SQLAlchemyError as e:
+        LOG.exception(e.message)
+        request.response.status = 500
+        return {'msg' :  MESSAGES['db']}
 
-    allow_extra_fields = True
-    filter_extra_fields = True
-
-    email = validators.UnicodeString(max=255)
-    password = validators.UnicodeString()
-
-@view_config(route_name='login')
+@view_config(route_name='login', renderer='json')
 def login(request):
-    form = Form(request, schema=LoginSchema())
-    if request.POST and form.validate():
-        user = DBSession.query(User).filter(User.email == form.data['email']).first()
+    try: 
+        validate(instance=request.json, schema=login_schema)
+        user = DBSession.query(User).filter(User.email == request.json['email']).first()
         if user:
-            if check_password(user.password, form.data['password']):
-                headers = remember(request, form.data['email'])
-                return HTTPOk(headers=headers)
-    else:
-        return HTTPBadRequest('Invalid arguments')
-    return HTTPForbidden('Failed to login')
+            if check_password(user.password, request.json['password']):
+                headers = remember(request, request.json['email'])
+                request.response.headerlist.extend(headers)
+                request.response.status = 200
+                return {'id' : user.id}
+    except:
+        request.response.status = 400
+        return {'msg' : MESSAGES['request']}
+    request.response.status = 403
+    return {'msg' :  MESSAGES['login']}
 
-@view_config(route_name='logout', permission='view')
+@view_config(route_name='logout', permission='view', renderer='json')
 def logout(request):
     headers = forget(request)
-    return HTTPOk(headers=headers)
+    request.response.headerlist.extend(headers)
+    request.response.status = 200
+    return {'msg' :  MESSAGES['ok']}
 
-@view_config(route_name='consumer_add')
+@view_config(route_name='consumer_add', renderer='json')
+@json_match(schema=consumer_schema)
 def consumer_add(request):
+    if DBSession.query(User).filter(User.email == request.json['email']).one_or_none():
+        request.response.status = 403
+        return {'msg' :  MESSAGES['email']}
     consumer = Consumer()
-    form = Form(request, schema=ConsumerSchema(), obj=consumer)
-    if request.POST and form.validate():
-        try:
-            if DBSession.query(Consumer).filter(Consumer.email == form.data['email']).one_or_none():
-                return HTTPForbidden('Email already exists')
-            form.bind(consumer)
-            consumer.group = 'consumer'
-            DBSession.add(consumer)
-            DBSession.flush()
-            return HTTPOk('You have done well, comrade')   
-        except SQLAlchemyError as e:
-            LOG.exception(e.message)
-            return HTTPInternalServerError()
-    return HTTPBadRequest('Bad request')
+    consumer.email = request.json['email']
+    consumer.password = hash_password(request.json['password'])
+    consumer.first_name = request.json['first_name']
+    consumer.second_name = request.json['second_name']
+    consumer.gender = request.json['gender']
+    consumer.group = 'consumer'
+    DBSession.add(consumer)
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+ 
    
-@view_config(route_name='consumer_edit', permission='view')
+@view_config(route_name='consumer_edit', permission='view', renderer='json')
+@user_id_match
+@json_match(schema=consumer_schema)
 def consumer_edit(request):
-    try:
-        consumer = DBSession.query(Consumer).get(request.matchdict['id'])
-    except SQLAlchemyError as e:
-        return HTTPBadRequest('Invalid ID')
-    if not consumer:
-        return HTTPBadRequest('No consumer')
-    if (consumer.group != 'admin') and (consumer.email != unauthenticated_userid(request)):
-        return HTTPForbidden('No access')
-    form = Form(request, schema=ConsumerSchema(), obj=consumer)
-    if request.POST and form.validate():
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    if DBSession.query(User).filter(User.email == request.json['email']).filter(User.id != consumer.id).one_or_none():
+        request.response.status = 403
+        return {'msg' :  MESSAGES['email']}
+    consumer.email = request.json['email']
+    consumer.password = hash_password(request.json['password'])
+    consumer.first_name = request.json['first_name']
+    consumer.second_name = request.json['second_name']
+    consumer.gender = request.json['gender']
+    if 'interests' in request.json.keys():
+        old_interests = set(map(lambda x: x.id, consumer.interests))
+        new_interests = set(request.json['interests'])
+        to_remove = old_interests.difference(new_interests)
+        to_add = new_interests.difference(old_interests)
         try:
-            if DBSession.query(Consumer).filter(Consumer.email == form.data['email']).filter(Consumer.id != consumer.id).one_or_none():
-                return HTTPForbidden('Email already exists')
-            form.bind(consumer)
-            DBSession.flush()
-            return HTTPOk('You have done well, comrade')   
+            if len(to_remove):
+                DBSession.execute(consumer_interests.delete()
+                        .where(and_(consumer_interests.c.consumer_id == consumer.id, consumer_interests.c.course_category_id.in_(to_remove))))
+            if len(to_add):
+                DBSession.execute(consumer_interests.insert(), [
+                    {'consumer_id': consumer.id, 'course_category_id': x} for x in to_add
+                ])
         except SQLAlchemyError as e:
             LOG.exception(e.message)
-            return HTTPInternalServerError()
-    return HTTPBadRequest('Bad request')
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db'], 'err' : e.message}
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}   
+        
    
-@view_config(route_name='consumer_delete', permission='view')
-def consumer_delete(request):   
-    try:
-        consumer = DBSession.query(Consumer).get(request.matchdict['id'])
-    except SQLAlchemyError as e:
-        return HTTPBadRequest('Invalid ID')
-    if not consumer:
-        return HTTPBadRequest('No consumer')
-    if (consumer.group != 'admin') and (consumer.email != unauthenticated_userid(request)):
-        return HTTPForbidden('No access')
+@view_config(route_name='consumer_remove', permission='view', renderer='json')
+@user_id_match
+def consumer_remove(request):   
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
     try:
         DBSession.delete(consumer)
         DBSession.flush()
     except SQLAlchemyError as e:
             LOG.exception(e.message)
-            return HTTPInternalServerError()
-    return HTTPOk('You have done well, comrade')   
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
 
 @view_config(route_name='consumer_view', permission='view', renderer='json')
+@user_id_match
 def consumer_view(request):
-    try:
-        consumer = DBSession.query(Consumer).get(request.matchdict['id'])
-    except SQLAlchemyError as e:
-        return HTTPBadRequest('Invalid ID')
-    if not consumer:
-        return HTTPBadRequest('No consumer')
-    if (consumer.group != 'admin') and (consumer.email != unauthenticated_userid(request)):
-        return HTTPForbidden('No access')
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    request.response.status = 200
     return consumer.to_json()
 
-##############################################################################3
+@view_config(route_name='consumer_favs_view', permission='view', renderer='json')
+@user_id_match
+def consumer_favs_view(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    request.response.status = 200
+    return [fav.to_json() for fav in consumer.fav_courses]
 
-# @view_config(route_name='banner_add', renderer='templates/editor.mako', permission='edit', require_csrf=True)
-# def banner_add(request):
-#     banner = Banner()
-#     form = Form(request, schema=BannerSchema(), obj=banner)
-#     renderer = FormRenderer(form, csrf_field='csrf_token')
-#     if request.POST and form.validate():
-#         form.bind(banner)
-#         try:
-#             DBSession.add(banner)
-#             DBSession.flush()
-#             if ('image' in request.POST) and (request.POST['image'] != "") and request.POST['image'].file:
-#                 filename = request.POST['image'].filename
-#                 banner.image = filename
-#                 image = request.POST['image'].file
-#                 path = banner.full_path()
-#                 file_path = os.path.join(path, filename)
-#                 image.seek(0)
-#                 with open(file_path, 'wb') as f:
-#                     shutil.copyfileobj(image, f)
-#             if not banner.image:
-#                 banner.enabled = False
-#             DBSession.flush()
-
-#             url = request.route_url('admin')
-#             return HTTPFound(location=url)
-#         except SQLAlchemyError as e:
-#             LOG.exception(e.message)
-#             request.session.flash(MESSAGES['db'])
-#         except IOError as e:
-#             LOG.exception(e.message)
-#             request.session.flash(MESSAGES['file'])
-#     return {
-#         'renderer': renderer
-#     }
+@view_config(route_name='consumer_fav_add', permission='view', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def consumer_fav_add(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course in consumer.fav_courses:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['fav_course']}
+    try:
+        consumer.fav_courses.append(course)
+        DBSession.flush()
+        request.response.status = 200
+        return {'msg' : MESSAGES['ok']} 
+    except SQLAlchemyError as e:
+        request.response.status = 500
+        return {'msg' : MESSAGES['db']} 
 
 
-# @view_config(route_name='banner_edit', renderer='templates/editor.mako', permission='edit', require_csrf=True)
-# def banner_edit(request):
-#     try:
-#         banner = DBSession.query(Banner).get(request.matchdict['id'])
-#     except SQLAlchemyError as e:
-#         request.session.flash(MESSAGES['id'])
-#         url = request.route_url('admin')
-#         return HTTPFound(location=url)
 
-#     form = Form(request, schema=BannerSchema(), obj=banner)
-#     renderer = FormRenderer(form, csrf_field='csrf_token')
+@view_config(route_name='consumer_fav_remove', permission='view', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def consumer_fav_remove(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course not in consumer.fav_courses:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['fav_course']}
+    try:
+        consumer.fav_courses.remove(course)
+        DBSession.flush()
+        request.response.status = 200
+        return {'msg' : MESSAGES['ok']}  
+    except SQLAlchemyError as e:
+        request.response.status = 500
+        return {'msg' : MESSAGES['db']} 
 
-#     if request.POST and form.validate():
-#         form.bind(banner)
-#         try:
-#             DBSession.flush()
-#             if ('image' in request.POST) and (request.POST['image'] != "") and request.POST['image'].file:
-#                 filename = request.POST['image'].filename
-#                 image = request.POST['image'].file
-#                 banner.image = filename
-#                 path = banner.full_path()
-#                 if os.path.isdir(path):
-#                     delete_contents(path)
-#                 file_path = os.path.join(path, filename)
-#                 image.seek(0)
-#                 with open(file_path, 'wb') as f:
-#                     shutil.copyfileobj(image, f)
-#             if not banner.image:
-#                 banner.enabled = False
-#             DBSession.flush()
+@view_config(route_name='provider_add', renderer='json')
+@json_match(schema=provider_schema)
+def provider_add(request):
+    if DBSession.query(User).filter(User.email == request.json['email']).one_or_none():
+        request.response.status = 403
+        return {'msg' :  MESSAGES['email']}
+    provider = Provider()
+    provider.email = request.json['email']
+    provider.password = hash_password(request.json['password'])
+    provider.name = request.json['name']
+    provider.website = request.json['website']
+    provider.about = request.json['about']
+    provider.group = 'provider'
+    DBSession.add(provider)
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+        
+@view_config(route_name='provider_edit', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=provider_schema)
+def provider_edit(request):
+    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    if DBSession.query(User).filter(User.email == request.json['email']).filter(User.id != provider.id).one_or_none():
+        request.response.status = 403
+        return {'msg' :  MESSAGES['email']}
+    provider.email = request.json['email']
+    provider.password = hash_password(request.json['password'])
+    provider.name = request.json['name']
+    provider.website = request.json['website']
+    provider.about = request.json['about']
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
 
-#             url = request.route_url('admin')
-#             return HTTPFound(location=url)
-#         except SQLAlchemyError as e:
-#             LOG.exception(e.message)
-#             request.session.flash(MESSAGES['db'])
-#         except IOError as e:
-#             LOG.exception(e.message)
-#             request.session.flash(MESSAGES['file'])
-#     return {
-#         'renderer': renderer,
-#         'path': banner.static_path('edit_image')
-#     }
+@view_config(route_name='provider_remove', permission='add', renderer='json')
+@user_id_match
+def provider_remove(request):   
+    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    try:
+        DBSession.delete(provider)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+
+@view_config(route_name='provider_view', permission='view', renderer='json')
+def provider_view(request): 
+    try:
+        provider = DBSession.query(Provider).get(request.matchdict['id'])
+    except SQLAlchemyError as e:
+        request.response.status = 400
+        return {'msg' :  MESSAGES['id']}
+    if not provider:
+        request.response.status = 400
+        return {'msg' :  MESSAGES['id']}
+    request.response.status = 200
+    return provider.to_json()
+  
+@view_config(route_name='course_add', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=course_schema)
+def course_add(request):
+    course = Course()
+    course.name = request.json['name']
+    course.description = request.json['description']
+    course.complexity = request.json['complexity']
+    course.author = request.json['author']
+    course.link = request.json['link']
+    DBSession.add(course)
+    DBSession.flush()
+
+    DBSession.execute(course_category_course.insert(), [
+        {'course_category_id': x, 'course_id': course.id} for x in request.json['course_categories']
+    ])
+            
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+
+@view_config(route_name='course_edit', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=course_schema)
+@obj_id_match(oid='course_id', Obj=Course)
+def course_edit(request):
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course.provider_id is not request.matchdict['id']:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+    course.name = request.json['name']
+    course.description = request.json['description']
+    course.complexity = request.json['complexity']
+    course.author = request.json['author']
+    course.link = request.json['link']
+    DBSession.flush()
+
+    old_categories = set(map(lambda x: x.id, course.course_categories))
+    new_categories = set(request.json['course_categories'])
+    to_remove = old_categories.difference(new_categories)
+    to_add = new_categories.difference(old_categories)
+    try:
+        if len(to_remove):
+            DBSession.execute(course_category_course.delete()
+                .where(and_(course_category_course.c.course_id == course.id, course_category_course.c.course_category_id.in_(to_remove))))
+        if len(to_add):
+            DBSession.execute(course_category_course.insert(), [
+                {'course_category_id': x, 'course_id': course.id} for x in request.json['course_categories']
+            ])
+    
+    except SQLAlchemyError as e:
+        LOG.exception(e.message)
+        request.response.status = 500
+        return {'msg' :  MESSAGES['db'], 'err' : e.message}
+        
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='course_remove', permission='add', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def course_remove(request):
+    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course.provider_id is not request.matchdict['id']:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+    try:
+        DBSession.delete(course)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='course_view', permission='view', renderer='json')
+@obj_id_match(oid='course_id', Obj=Course)
+def course_view(request):
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    request.response.status = 200
+    return course.to_json()
+
+@view_config(route_name='course_filter', permission='view', renderer='json')
+@json_match(schema=course_filter_schema)
+def course_filter(request):
+    courses = DBSession.query(Course).filter(func.lower(Course.name).contains(request.json['search_string'].lower())).all()
+    request.response.status = 200
+    return [course.to_json() for course in courses]
+
+@view_config(route_name='course_category_add', permission='edit', renderer='json')
+@json_match(schema=course_category_schema)
+def course_category_add(request):
+    course_category = Course_category()
+    course_category.name = request.json['name']
+    course_category.description = request.json['description']
+    DBSession.add(course_category)
+    DBSession.flush()          
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='course_category_edit', permission='edit', renderer='json')
+@json_match(schema=course_category_schema)
+@obj_id_match(oid='course_category_id', Obj=CourseCategory)
+def course_category_edit(request):
+    course_category = DBSession.query(CourseCategory).get(request.matchdict['course_category_id'])
+    course_category.name = request.json['name']
+    course_category.description = request.json['description']
+    DBSession.flush()          
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}
+
+@view_config(route_name='course_category_remove', permission='edit', renderer='json')
+@obj_id_match(oid='course_category_id', Obj=Course)
+def course_category_remove(request):
+    course_category = DBSession.query(CourseCategory).get(request.matchdict['course_category_id'])
+    try:
+        DBSession.delete(course_category)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
 
 
-# @view_config(route_name='banner_delete', permission='edit', require_csrf=True)
-# def banner_delete(request):
-#     try:
-#         banner = DBSession.query(Banner).get(request.matchdict['id'])
-#         DBSession.delete(banner)
-#         DBSession.flush()
-#         url = request.route_url('admin')
-#     except SQLAlchemyError as e:
-#         LOG.exception(e.message)
-#         request.session.flash(MESSAGES['delete'])
-#         url = request.route_url('admin')
-#     finally:
-#         return HTTPFound(location=url)
+@view_config(route_name='course_category_view', permission='view', renderer='json')
+@obj_id_match(oid='course_category_id', Obj=CourseCategory)
+def course_category_view(request):
+    course_category = DBSession.query(CourseCategory).get(request.matchdict['course_category_id'])
+    request.response.status = 200
+    return course_category.to_json()
 
 
-# @view_config(route_name='banner_move', permission='edit', require_csrf=True)
-# def banner_move(request):
-#     url = request.route_url('admin')
-#     form = Form(request, schema=MoveSchema())
-#     if form.validate():
-#         try:
-#             banner = DBSession.query(Banner).get(request.matchdict['id'])
-#             if form.data['upwards']:
-#                 pos1 = DBSession.query(func.max(Banner.pos)).filter(
-#                     Banner.pos < banner.pos).one_or_none()
-#                 if pos1[0] is None:
-#                     return HTTPFound(location=url)
-#                 pos1 = Decimal(pos1[0])
-#                 pos2 = DBSession.query(func.max(Banner.pos)).filter(
-#                     Banner.pos < pos1).one_or_none()
-#                 if pos2[0] is None:
-#                     pos2 = 0
-#                 else:
-#                     pos2 = Decimal(pos2[0])
-#                 banner.pos = (pos1 + pos2) / 2
-#             else:
-#                 pos1 = DBSession.query(func.min(Banner.pos)).filter(
-#                     Banner.pos > banner.pos).one_or_none()
-#                 if pos1[0] is None:
-#                     return HTTPFound(location=url)
-#                 pos1 = Decimal(pos1[0])
-#                 pos2 = DBSession.query(func.min(Banner.pos)).filter(
-#                     Banner.pos > pos1).one_or_none()
-#                 if pos2[0] is None:
-#                     pos2 = Banner.seq_pos.next_value()
-#                 else:
-#                     pos2 = Decimal(pos2[0])
-#                 banner.pos = (pos1 + pos2) / 2
-#             DBSession.flush()
-#         except SQLAlchemyError as e:
-#             LOG.exception(e.message)
-#             request.session.flash(MESSAGES['move'])
-#             url = request.route_url('admin')
-#     else:
-#         url = request.route_url('admin')
-#     return HTTPFound(location=url)
+@view_config(route_name='course_category_courses_view', permission='view', renderer='json')
+@obj_id_match(oid='course_category_id', Obj=CourseCategory)
+def course_category_courses_view(request):
+    course_category = DBSession.query(CourseCategory).get(request.matchdict['course_category_id'])
+    request.response.status = 200
+    return [course.to_json() for course in course_category.courses]
+
+@view_config(route_name='course_categories_view', permission='view', renderer='json')
+def course_categories_view(request):
+    course_categories = DBSession.query(CourseCategory).all()
+    request.response.status = 200
+    return [cat.to_json() for cat in course_categories]
+
+
+@view_config(route_name='teacher_add', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=teacher_schema)
+def teacher_add(request):
+    teacher = Teacher()
+    teacher.first_name = request.json['first_name']
+    teacher.second_name = request.json['second_name'] 
+
+    DBSession.add(teacher)
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+
+@view_config(route_name='teacher_edit', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=teacher_schema)
+@obj_id_match(oid='teacher_id', Obj=Teacher)
+def teacher_edit(request):
+    teacher = DBSession.query(Teacher).get(request.matchdict['teacher_id'])
+    teacher.first_name = request.json['first_name']
+    teacher.second_name = request.json['second_name'] 
+
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}
+
+@view_config(route_name='teacher_remove', permission='add', renderer='json')
+@user_id_match
+@obj_id_match(oid='teacher_id', Obj=Teacher)
+def teacher_remove(request):
+    teacher = DBSession.query(Teacher).get(request.matchdict['teacher_id'])
+    try:
+        DBSession.delete(teacher)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='teacher_view', permission='view', renderer='json')
+@obj_id_match(oid='teacher_id', Obj=Teacher)
+def teacher_view(request):
+    teacher = DBSession.query(Teacher).get(request.matchdict['teacher_id'])
+    request.response.status = 200
+    return teacher.to_json()
+
+@view_config(route_name='lesson_add', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=lesson_schema)
+def lesson_add(request):
+    lesson = lesson()
+    lesson.name = request.json['name']
+    lesson.teacher_id = request.json['teacher_id'] 
+    lesson.course_id = request.json['course_id'] 
+
+    DBSession.add(lesson)
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+
+@view_config(route_name='lesson_edit', permission='add', renderer='json')
+@user_id_match
+@json_match(schema=lesson_schema)
+@obj_id_match(oid='lesson_id', Obj=Lesson)
+def lesson_edit(request):
+    lesson = DBSession.query(Lesson).get(request.matchdict['lesson_id'])
+    lesson.name = request.json['name']
+    lesson.teacher_id = request.json['teacher_id'] 
+    lesson.course_id = request.json['course_id']  
+
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}
+
+@view_config(route_name='lesson_remove', permission='add', renderer='json')
+@user_id_match
+@obj_id_match(oid='lesson_id', Obj=Lesson)
+def lesson_remove(request):
+    lesson = DBSession.query(Lesson).get(request.matchdict['lesson_id'])
+    try:
+        DBSession.delete(lesson)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='lesson_view', permission='view', renderer='json')
+@obj_id_match(oid='lesson_id', Obj=Lesson)
+def lesson_view(request):
+    lesson = DBSession.query(Lesson).get(request.matchdict['lesson_id'])
+    request.response.status = 200
+    return lesson.to_json()

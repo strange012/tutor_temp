@@ -26,22 +26,49 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
     with Configurator(settings=settings) as config:
-        config.include('pyramid_mako')
         config.add_static_view('static', 'static', cache_max_age=3600)
 
+        config.add_route('get_id', '/')
 
         config.add_route('login', '/login')
         config.add_route('logout', '/logout')
 
         config.add_route('consumer_add', '/consumer/add')
         config.add_route('consumer_edit', '/consumer/{id}/edit')
-        config.add_route('consumer_delete', '/consumer/{id}/delete')
+        config.add_route('consumer_remove', '/consumer/{id}/remove')
         config.add_route('consumer_view', '/consumer/{id}/view')
 
-        # config.add_route('banner_add', '/admin/banner/create')
-        # config.add_route('banner_edit', '/admin/banner/{id}/update')
-        # config.add_route('banner_delete', '/admin/banner/{id}/delete')
-        # config.add_route('banner_move', '/admin/banner/{id}/move')
+        config.add_route('consumer_favs_view', '/consumer/{id}/fav/view')
+        config.add_route('consumer_fav_add', '/consumer/{id}/fav/{course_id}/add')
+        config.add_route('consumer_fav_remove', '/consumer/{id}/fav/{course_id}/remove')
+
+        config.add_route('provider_add', '/provider/add')
+        config.add_route('provider_edit', '/provider/{id}/edit')
+        config.add_route('provider_remove', '/provider/{id}/remove')
+        config.add_route('provider_view', '/provider/{id}/view')
+
+        config.add_route('course_add', 'provider/{id}/course/add')
+        config.add_route('course_edit', 'provider/{id}/course/{course_id}/edit')
+        config.add_route('course_remove', 'provider/{id}/course/{course_id}/remove')
+        config.add_route('course_view', 'course/{course_id}/view')
+        config.add_route('course_filter', 'course/view')
+
+        config.add_route('lesson_add', 'provider/{id}/lesson/add')
+        config.add_route('lesson_edit', 'provider/{id}/lesson/{lesson_id}/edit')
+        config.add_route('lesson_remove', 'provider/{id}/lesson/{lesson_id}/remove')
+        config.add_route('lesson_view', 'lesson/{lesson_id}/view')
+
+        config.add_route('course_category_add', '/course_category/add')
+        config.add_route('course_category_edit', '/course_category/{course_category_id}/edit')
+        config.add_route('course_category_remove', '/course_category/{course_category_id}/remove')
+        config.add_route('course_category_view', '/course_category/{course_category_id}/view')
+        config.add_route('course_category_courses_view', '/course_category/{course_category_id}/courses/view')
+        config.add_route('course_categories_view', '/course_category/view')
+
+        config.add_route('teacher_add', 'provider/{id}/teacher/add')
+        config.add_route('teacher_edit', 'provider/{id}/teacher/{teacher_id}/edit')
+        config.add_route('teacher_remove', 'provider/{id}/teacher/{teacher_id}/remove')
+        config.add_route('teacher_view', 'teacher/{teacher_id}/view')
 
         config.set_root_factory(Root)
         config.set_session_factory(session_factory)
