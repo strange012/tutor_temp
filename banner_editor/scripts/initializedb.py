@@ -51,6 +51,11 @@ def main(argv=sys.argv):
     print("BIBA")
     setup_logging(config_uri)
     settings = get_appsettings(config_uri, options=options)
+
+
+    if os.environ.get('DATABASE_URL', ''):
+        settings["sqlalchemy.url"] = os.environ["DATABASE_URL"]
+        
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)    
     Base.metadata.drop_all(engine)

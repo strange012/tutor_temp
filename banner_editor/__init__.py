@@ -5,6 +5,8 @@ from pyramid.session import SignedCookieSessionFactory
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 
+import os
+
 from .models import (
     DBSession,
     Base,
@@ -22,10 +24,15 @@ def main(global_config, **settings):
     authn_policy = AuthTktAuthenticationPolicy(
         'tutor_secret', callback=groupfinder, hashalg='sha512')
     authz_policy = ACLAuthorizationPolicy()
+
+    if os.environ.get('DATABASE_URL', ''):
+        settings["sqlalchemy.url"] = os.environ["DATABASE_URL"]
+
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
     with Configurator(settings=settings) as config:
+
         config.add_static_view('static', 'static', cache_max_age=3600)
 
         config.add_route('get_id', '/')
