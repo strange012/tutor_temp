@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
 python setup.py develop
-initialize_banner_editor_db
+initialize_banner_editor_db heroku.ini
 python runapp.py
