@@ -49,6 +49,10 @@ def main(global_config, **settings):
         config.add_route('consumer_fav_add', '/consumer/{id}/fav/{course_id}/add')
         config.add_route('consumer_fav_remove', '/consumer/{id}/fav/{course_id}/remove')
 
+        config.add_route('consumer_bookmarks_view', '/consumer/{id}/bookmark/view')
+        config.add_route('consumer_bookmark_add', '/consumer/{id}/bookmark/{course_id}/add')
+        config.add_route('consumer_bookmark_remove', '/consumer/{id}/bookmark/{course_id}/remove')
+
         config.add_route('provider_add', '/provider/add')
         config.add_route('provider_edit', '/provider/{id}/edit')
         config.add_route('provider_remove', '/provider/{id}/remove')
@@ -59,6 +63,7 @@ def main(global_config, **settings):
         config.add_route('course_remove', 'provider/{id}/course/{course_id}/remove')
         config.add_route('course_view', 'course/{course_id}/view')
         config.add_route('course_filter', 'course/view')
+        config.add_route('course_comments_view', 'course/{course_id}/comment/view')
 
         config.add_route('lesson_add', 'provider/{id}/lesson/add')
         config.add_route('lesson_edit', 'provider/{id}/lesson/{lesson_id}/edit')
@@ -76,6 +81,12 @@ def main(global_config, **settings):
         config.add_route('teacher_edit', 'provider/{id}/teacher/{teacher_id}/edit')
         config.add_route('teacher_remove', 'provider/{id}/teacher/{teacher_id}/remove')
         config.add_route('teacher_view', 'teacher/{teacher_id}/view')
+
+        config.add_route('comment_add', 'course/{course_id}/comment/add')
+        config.add_route('comment_edit', 'comment/{comment_id}/edit')
+        config.add_route('comment_remove', 'comment/{comment_id}/remove')
+        config.add_route('comment_view', 'comment/{comment_id}/view')
+
 
         config.set_root_factory(Root)
         config.set_session_factory(session_factory)

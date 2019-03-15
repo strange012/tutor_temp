@@ -57,7 +57,7 @@ class Course(Base):
     complexity = Column(Integer)
     image = Column(Text)
     lessons = relationship('Lesson', backref='course')
-    
+    comments = relationship('Comment', backref='course')
     def to_json(self):
         return {
             'course_id' : self.id,
@@ -68,7 +68,7 @@ class Course(Base):
             'complexity' : self.complexity,
             'lessons' : [lesson.id for lesson in self.lessons],
             'course_categories' : [cat.id for cat in self.course_categories],
-            'favs' : [user.id for user in self.users]
+            'favs' : [consumer.id for consumer in self.consumers_fav]
         }
 
 class Lesson(Base):
@@ -114,3 +114,18 @@ class CourseCategory(Base):
             'courses' : [course.id for course in self.courses]
         }
 
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(Integer, primary_key=True)
+    course_id = Column(Integer, ForeignKey('course.id'))
+    consumer_id = Column(Integer, ForeignKey('consumer.id'))
+    message = Column(String)
+
+    def to_json(self):
+        return {
+            'comment_id' : self.id,
+            'course_id' : self.course_id,
+            'message' : self.message,
+            'consumer_id' : self.consumer_id,
+            'consumer_name' : self.consumer.first_name + ' ' + self.consumer.second_name
+        }

@@ -50,6 +50,12 @@ consumer_fav_courses = Table(
     Column('course_id', Integer, ForeignKey('course.id'))
 )
 
+consumer_bookmarks = Table(
+    'consumer_bookmarks', Base.metadata,
+    Column('consumer_id', Integer, ForeignKey('consumer.id')),
+    Column('course_id', Integer, ForeignKey('course.id'))
+)
+
 consumer_interests = Table(
     'user_interests', Base.metadata,
     Column('consumer_id', Integer, ForeignKey('consumer.id')),
@@ -65,6 +71,9 @@ class Consumer(User):
     first_name = Column(String, nullable=False)
     second_name = Column(String, nullable=False)
     gender = Column(String, nullable=False)
+
+    comments = relationship('Comment', backref='consumer')
+
     interests = relationship(
         'CourseCategory',
         secondary='user_interests',
@@ -73,7 +82,13 @@ class Consumer(User):
     fav_courses = relationship(
         'Course',
         secondary='consumer_fav_courses',
-        backref='users'
+        backref='consumers_fav'
+    )
+
+    bookmarks = relationship(
+        'Course',
+        secondary='consumer_fav_courses',
+        backref='consumers_bookmark'
     )
     def to_json(self):
         return {
@@ -83,7 +98,8 @@ class Consumer(User):
             'email' : self.email,
             'gender' : self.gender,
             'interests' : [cat.id for cat in self.interests],
-            'fav_courses' : [course.id for course in self.fav_courses]
+            'fav_courses' : [course.id for course in self.fav_courses],
+            'bookmarks' : [course.id for course in self.bookmarks]
         }
 
 class Provider(User):

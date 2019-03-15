@@ -23,7 +23,8 @@ from .models import (
     CourseCategory,
     Lesson,
     Teacher,
-    course_category_course
+    course_category_course,
+    Comment
 )
 
 from security import (
@@ -52,6 +53,7 @@ MESSAGES = {
     'access' : 'No access',
     'email' : 'Email already exists',
     'fav_course' : 'Inacceptable favourite course',
+    'bookmark' : 'Inacceptable favourite course',
     'course_id' : 'Invalid course ID',
     'course_category_id' : 'Invalid course category ID',
     'lesson_id' : 'Invalid lesson ID',
@@ -138,6 +140,14 @@ lesson_schema = {
         'name' : {'type' : 'string'},
         'teacher_id' : {'type' : 'number'},
         'course_id' : {'type' : 'number'}
+    },
+    'required' : ['name', 'teacher_id', 'course_id']
+}
+
+comment_schema = {
+    'type' : 'object',
+    'properties' : {
+        'message' : {'type' : 'string'}
     },
     'required' : ['name', 'teacher_id', 'course_id']
 }
@@ -352,6 +362,49 @@ def consumer_fav_remove(request):
         request.response.status = 500
         return {'msg' : MESSAGES['db']} 
 
+@view_config(route_name='consumer_bookmarks_view', permission='view', renderer='json')
+@user_id_match
+def consumer_bookmarks_view(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    request.response.status = 200
+    return [bookmark.to_json() for bookmark in consumer.bookmarks]
+
+@view_config(route_name='consumer_bookmark_add', permission='view', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def consumer_bookmark_add(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course in consumer.bookmarks:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['bookmark']}
+    try:
+        consumer.bookmarks.append(course)
+        DBSession.flush()
+        request.response.status = 200
+        return {'msg' : MESSAGES['ok']} 
+    except SQLAlchemyError as e:
+        request.response.status = 500
+        return {'msg' : MESSAGES['db']} 
+
+@view_config(route_name='consumer_bookmark_remove', permission='view', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def consumer_bookmark_remove(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course not in consumer.bookmarks:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['bookmark']}
+    try:
+        consumer.bookmarks.remove(course)
+        DBSession.flush()
+        request.response.status = 200
+        return {'msg' : MESSAGES['ok']}  
+    except SQLAlchemyError as e:
+        request.response.status = 500
+        return {'msg' : MESSAGES['db']} 
+
 @view_config(route_name='provider_add', renderer='json')
 @json_match(schema=provider_schema)
 def provider_add(request):
@@ -507,7 +560,7 @@ def course_filter(request):
 @view_config(route_name='course_category_add', permission='edit', renderer='json')
 @json_match(schema=course_category_schema)
 def course_category_add(request):
-    course_category = Course_category()
+    course_category = CourseCategory()
     course_category.name = request.json['name']
     course_category.description = request.json['description']
     DBSession.add(course_category)
@@ -615,7 +668,7 @@ def teacher_view(request):
 @user_id_match
 @json_match(schema=lesson_schema)
 def lesson_add(request):
-    lesson = lesson()
+    lesson = Lesson()
     lesson.name = request.json['name']
     lesson.teacher_id = request.json['teacher_id'] 
     lesson.course_id = request.json['course_id'] 
@@ -632,8 +685,6 @@ def lesson_add(request):
 def lesson_edit(request):
     lesson = DBSession.query(Lesson).get(request.matchdict['lesson_id'])
     lesson.name = request.json['name']
-    lesson.teacher_id = request.json['teacher_id'] 
-    lesson.course_id = request.json['course_id']  
 
     DBSession.flush()    
     request.response.status = 200
@@ -660,3 +711,67 @@ def lesson_view(request):
     lesson = DBSession.query(Lesson).get(request.matchdict['lesson_id'])
     request.response.status = 200
     return lesson.to_json()
+
+@view_config(route_name='comment_add', permission='view', renderer='json')
+@json_match(schema=comment_schema)
+@obj_id_match(oid='course_id', Obj=Course)
+def comment_add(request):
+    comment = Comment()
+    comment.message = request.json['message']
+    comment.course_id = request.matchdict['course_id']
+    comment.consumer_id = DBSession.query(Consumer).filter(Consumer.email == unauthenticated_userid(request)).first().id
+
+    DBSession.add(comment)
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}  
+
+@view_config(route_name='comment_edit', permission='view', renderer='json')
+@json_match(schema=comment_schema)
+@obj_id_match(oid='comment_id', Obj=Comment)
+def comment_edit(request):
+    comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
+    user = unauthenticated_userid(request)
+    if (comment.consumer.email != user) and (comment.course.provider.email != user):
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+
+    comment.message = request.json['message']
+    DBSession.flush()    
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']}
+
+@view_config(route_name='comment_remove', permission='view', renderer='json')
+@obj_id_match(oid='comment_id', Obj=Comment)
+def comment_remove(request):
+    comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
+    user = unauthenticated_userid(request)
+    if (comment.consumer.email != user) and (comment.course.provider.email != user):
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+    try:
+        DBSession.delete(comment)
+        DBSession.flush()
+    except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='comment_view', permission='view', renderer='json')
+@obj_id_match(oid='comment_id', Obj=Comment)
+def comment_view(request):
+    comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
+    request.response.status = 200
+    return comment.to_json()
+
+@view_config(route_name='course_comments_view', permission='view', renderer='json')
+@obj_id_match(oid='course_id', Obj=Course)
+def course_comments_view(request):
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    request.response.status = 200
+    return {
+        'count' : len(course.comments),
+        'comments' : [comment.to_json() for comment in course.comments]
+    }
