@@ -81,7 +81,7 @@ consumer_schema = {
             }
         }
     },
-    'required' : ['email', 'password', 'first_name', 'second_name', 'gender']
+    'required' : ['email', 'password', 'first_name', 'second_name', 'gender', 'languages']
 }
 
 provider_schema = {
@@ -115,7 +115,7 @@ course_schema = {
         'complexity' : {'type' : 'number'},
         'course_categories' : {'type' : 'array'}
     },
-    'required' : ['name', 'author', 'link', 'description', 'complexity', 'course_categories']
+    'required' : ['name', 'author', 'link', 'description', 'complexity', 'course_categories', 'language']
 }
 
 course_filter_schema = {
