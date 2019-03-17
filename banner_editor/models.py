@@ -71,7 +71,8 @@ class Course(Base):
             'language' : self.language,
             'lessons' : [lesson.id for lesson in self.lessons],
             'course_categories' : [cat.id for cat in self.course_categories],
-            'favs' : [consumer.id for consumer in self.consumers_fav]
+            'favs' : [consumer.id for consumer in self.consumers_fav],
+            'bookmarks' : [consumer.id for consumer in self.consumers_bookmark]
         }
 
 class Lesson(Base):
