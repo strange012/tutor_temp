@@ -2217,3 +2217,540 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
     obj, end = self.scan_once(s, idx)
 ValueError: Invalid \escape: line 2 column 21 (char 22)
+2019-03-17 18:36:41,019 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column consumer.languages does not exist
+LINE 1: ..._second_name, consumer.gender AS consumer_gender, consumer.l...
+                                                             ^
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 282, in consumer_edit
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 1068, in _get_impl
+    return db_load_fn(self, primary_key_identity)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/loading.py", line 282, in load_on_pk_identity
+    return q.one()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3274, in one
+    ret = self.one_or_none()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3243, in one_or_none
+    ret = list(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3316, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3341, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column consumer.languages does not exist
+LINE 1: ..._second_name, consumer.gender AS consumer_gender, consumer.l...
+                                                             ^
+
+[SQL: SELECT consumer.id AS consumer_id, "user".id AS user_id, "user".user_type AS user_user_type, "user"."group" AS user_group, "user".email AS user_email, "user".password AS user_password, consumer.first_name AS consumer_first_name, consumer.second_name AS consumer_second_name, consumer.gender AS consumer_gender, consumer.languages AS consumer_languages 
+FROM "user" JOIN consumer ON "user".id = consumer.id 
+WHERE "user".id = %(param_1)s]
+[parameters: {'param_1': u'4'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:36:43,977 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column consumer.languages does not exist
+LINE 1: ..._second_name, consumer.gender AS consumer_gender, consumer.l...
+                                                             ^
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 282, in consumer_edit
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 959, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 1068, in _get_impl
+    return db_load_fn(self, primary_key_identity)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/loading.py", line 282, in load_on_pk_identity
+    return q.one()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3274, in one
+    ret = self.one_or_none()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3243, in one_or_none
+    ret = list(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3316, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/query.py", line 3341, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column consumer.languages does not exist
+LINE 1: ..._second_name, consumer.gender AS consumer_gender, consumer.l...
+                                                             ^
+
+[SQL: SELECT consumer.id AS consumer_id, "user".id AS user_id, "user".user_type AS user_user_type, "user"."group" AS user_group, "user".email AS user_email, "user".password AS user_password, consumer.first_name AS consumer_first_name, consumer.second_name AS consumer_second_name, consumer.gender AS consumer_gender, consumer.languages AS consumer_languages 
+FROM "user" JOIN consumer ON "user".id = consumer.id 
+WHERE "user".id = %(param_1)s]
+[parameters: {'param_1': u'4'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:37:22,969 ERROR [waitress][waitress] Exception when serving /consumer/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 269, in consumer_add
+    consumer.languages = [Language[lang] for lang in request.json['languages']]
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/enum/__init__.py", line 393, in __getitem__
+    return cls._member_map_[name]
+KeyError: u'Russian'
+2019-03-17 18:41:40,106 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (4, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 274, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (4, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'second_name': u'Orgy', 'id': 4}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:46:03,851 ERROR [waitress][waitress] Exception when serving /consumer/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 269, in consumer_add
+    print(Language[Language('Russian')])
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/enum/__init__.py", line 393, in __getitem__
+    return cls._member_map_[name]
+KeyError: <Language.ru: u'Russian'>
+2019-03-17 18:46:24,805 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (5, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 274, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (5, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 5, 'second_name': u'Orgy'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:46:54,481 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (6, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 274, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (6, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'second_name': u'Orgy', 'id': 6}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:48:05,732 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (7, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 208, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 271, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (7, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 7, 'second_name': u'Orgy'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:50:48,362 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (8, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 208, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 272, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (8, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 8, 'second_name': u'Orgy'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:51:12,928 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (9, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 208, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 272, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...er, languages) VALUES (9, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 9, 'second_name': u'Orgy'}]
+(Background on this error at: http://sqlalche.me/e/f405)
+2019-03-17 18:57:06,536 ERROR [banner_editor.views][waitress] (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...r, languages) VALUES (10, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 208, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 272, in consumer_add
+    DBSession.flush()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/orm/persistence.py", line 1066, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+ProgrammingError: (psycopg2.ProgrammingError) column "languages" is of type language[] but expression is of type text[]
+LINE 1: ...r, languages) VALUES (10, 'Gay', 'Orgy', 'other', ARRAY['ru'...
+                                                             ^
+HINT:  You will need to rewrite or cast the expression.
+
+[SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
+[parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 10, 'second_name': u'Orgy'}]
+(Background on this error at: http://sqlalche.me/e/f405)

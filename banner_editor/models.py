@@ -18,6 +18,7 @@ from pyramid.threadlocal import get_current_registry
 from sqlalchemy.ext.declarative import declarative_base
 from exceptions import IOError
 
+
 from sqlalchemy.orm import (
     scoped_session,
     sessionmaker,
@@ -55,6 +56,7 @@ class Course(Base):
     link = Column(String)
     description = Column(String)
     complexity = Column(Integer)
+    language = Column(String)
     image = Column(Text)
     lessons = relationship('Lesson', backref='course')
     comments = relationship('Comment', backref='course')
@@ -66,6 +68,7 @@ class Course(Base):
             'provider_id' : self.provider_id,
             'description' : self.description,
             'complexity' : self.complexity,
+            'language' : self.language,
             'lessons' : [lesson.id for lesson in self.lessons],
             'course_categories' : [cat.id for cat in self.course_categories],
             'favs' : [consumer.id for consumer in self.consumers_fav]

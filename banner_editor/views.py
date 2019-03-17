@@ -59,6 +59,8 @@ MESSAGES = {
     'lesson_id' : 'Invalid lesson ID',
     'teacher_id' : 'Invalid teacher ID'
 }
+
+LANGUAGES = ['Russian', 'English', 'German', 'Spanish', 'French']
 LOG = logging.getLogger(__name__)
 
 
@@ -70,7 +72,14 @@ consumer_schema = {
         'first_name' : {'type' : 'string'},
         'second_name' : {'type' : 'string'},
         'gender' : {'type' : 'string', 'enum' : ['male', 'female', 'other']},
-        'interests' : {'type' : 'array'}
+        'interests' : {'type' : 'array'},
+        'languages' : {
+            'type' : 'array',
+            'items' : {
+                'type' : 'string',
+                'enum' : LANGUAGES
+            }
+        }
     },
     'required' : ['email', 'password', 'first_name', 'second_name', 'gender']
 }
@@ -102,6 +111,7 @@ course_schema = {
         'author' : {'type' : 'string'},
         'link' : {'type' : 'string'},
         'description' : {'type' : 'string'},
+        'language' : {'type' : 'string', 'enum' : LANGUAGES},
         'complexity' : {'type' : 'number'},
         'course_categories' : {'type' : 'array'}
     },
@@ -253,6 +263,7 @@ def consumer_add(request):
     consumer.password = hash_password(request.json['password'])
     consumer.first_name = request.json['first_name']
     consumer.second_name = request.json['second_name']
+    consumer.languages = request.json['languages']
     consumer.gender = request.json['gender']
     consumer.group = 'consumer'
     DBSession.add(consumer)
@@ -273,6 +284,7 @@ def consumer_edit(request):
     consumer.password = hash_password(request.json['password'])
     consumer.first_name = request.json['first_name']
     consumer.second_name = request.json['second_name']
+    consumer.languages = request.json['languages']
     consumer.gender = request.json['gender']
     if 'interests' in request.json.keys():
         old_interests = set(map(lambda x: x.id, consumer.interests))
@@ -476,6 +488,7 @@ def course_add(request):
     course.description = request.json['description']
     course.complexity = request.json['complexity']
     course.author = request.json['author']
+    course.language = request.json['language']
     course.link = request.json['link']
     DBSession.add(course)
     DBSession.flush()
@@ -500,6 +513,7 @@ def course_edit(request):
     course.description = request.json['description']
     course.complexity = request.json['complexity']
     course.author = request.json['author']
+    course.language = request.json['language']
     course.link = request.json['link']
     DBSession.flush()
 

@@ -6,7 +6,8 @@ from sqlalchemy import (
     String,
     Text,
     ForeignKey,
-    Table
+    Table,
+    ARRAY,
 )
 from sqlalchemy.orm import relationship
 
@@ -74,6 +75,7 @@ class Consumer(User):
 
     comments = relationship('Comment', backref='consumer')
 
+    languages = Column(ARRAY(String))
     interests = relationship(
         'CourseCategory',
         secondary='user_interests',
@@ -96,8 +98,9 @@ class Consumer(User):
             'first_name' : self.first_name,
             'second_name' : self.second_name,
             'email' : self.email,
+            'languages' : self.languages,
             'gender' : self.gender,
-            'interests' : [cat.id for cat in self.interests],
+            'interests' : [{'id' : cat.id, 'name' : cat.name} for cat in self.interests],
             'fav_courses' : [course.id for course in self.fav_courses],
             'bookmarks' : [course.id for course in self.bookmarks]
         }
