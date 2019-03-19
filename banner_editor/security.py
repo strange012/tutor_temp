@@ -110,7 +110,7 @@ class Consumer(User):
 
     bookmarks = relationship(
         'Course',
-        secondary='consumer_fav_courses',
+        secondary='consumer_bookmarks',
         backref='consumers_bookmark'
     )
     def to_json(self):
