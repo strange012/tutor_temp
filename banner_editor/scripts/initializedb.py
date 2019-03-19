@@ -21,7 +21,8 @@ from ..models import (
     Course,
     Lesson,
     Teacher,
-    CourseCategory
+    CourseCategory,
+    course_category_course
 )
 
 from ..security import (
@@ -98,7 +99,7 @@ def main(argv=sys.argv):
         DBSession.add(provider)
         DBSession.add(consumer)
         DBSession.flush()
-        
+
         with open('data.json') as f:
             json_data = f.read()
         data = json.loads(json_data)
@@ -106,6 +107,15 @@ def main(argv=sys.argv):
 
         DBSession.execute(Course.__table__.insert(), data['courses'])
 
+        cat_course = []
+        for idx, course in enumerate(data['courses']):
+            for cat in course['course_categories']:
+                cat_course.append((idx + 1, cat))
+
+        DBSession.execute(course_category_course.insert(), [
+            {'course_category_id': y, 'course_id': x} for x, y in cat_course
+        ])
+        
         
 
 
