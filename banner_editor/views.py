@@ -422,7 +422,7 @@ def consumer_bookmark_remove(request):
 @user_id_match
 def consumer_feed(request):
     consumer = DBSession.query(Consumer).get(request.matchdict['id'])
-    
+    DBSession.query(Course).filter(Course.language in consumer.languages)
     request.response.status = 200
     return {'msg' : MESSAGES['db']} 
 
