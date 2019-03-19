@@ -46,7 +46,7 @@ def main(global_config, **settings):
         config.add_route('consumer_edit', '/consumer/{id}/edit')
         config.add_route('consumer_remove', '/consumer/{id}/remove')
         config.add_route('consumer_view', '/consumer/{id}/view')
-        
+
         config.add_route('consumer_feed', '/consumer/{id}/feed')
 
         config.add_route('consumer_favs_view', '/consumer/{id}/fav/view')
@@ -56,6 +56,9 @@ def main(global_config, **settings):
         config.add_route('consumer_bookmarks_view', '/consumer/{id}/bookmark/view')
         config.add_route('consumer_bookmark_add', '/consumer/{id}/bookmark/{course_id}/add')
         config.add_route('consumer_bookmark_remove', '/consumer/{id}/bookmark/{course_id}/remove')
+
+        config.add_route('consumer_image_add', '/consumer/{id}/image/add')
+        config.add_route('consumer_image_remove', '/consumer/{id}/image/remove')
 
         config.add_route('provider_add', '/provider/add')
         config.add_route('provider_edit', '/provider/{id}/edit')

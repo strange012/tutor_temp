@@ -11,7 +11,14 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from models import Base, DBSession, Course, CourseCategory
+from models import (
+    Base,
+    DBSession,
+    Course,
+    CourseCategory,
+    Image
+)
+from lib.util import PictureSize
 
 from pyramid.security import (
     Allow
@@ -79,28 +86,32 @@ consumer_bookmarks = Table(
 )
 
 consumer_interests = Table(
-    'user_interests', Base.metadata,
+    'consumer_interests', Base.metadata,
     Column('consumer_id', Integer, ForeignKey('consumer.id')),
     Column('course_category_id', Integer, ForeignKey('course_category.id'))
 )
 
-class Consumer(User):
+class Consumer(User, Image):
     __tablename__ = 'consumer'
     id = Column(Integer, ForeignKey('user.id', ondelete='CASCADE'), primary_key=True)
     __mapper_args__ = {
         'polymorphic_identity':'consumer'
     }
+    def path_string(self):
+        return self.second_name
+
     first_name = Column(String, nullable=False)
     second_name = Column(String, nullable=False)
     gender = Column(String, nullable=False)
+    image = Column(Text)
 
     comments = relationship('Comment', backref='consumer')
 
     languages = Column(ARRAY(String))
     interests = relationship(
         'CourseCategory',
-        secondary='user_interests',
-        backref='users'
+        secondary='consumer_interests',
+        backref='consumers'
     )
     fav_courses = relationship(
         'Course',
@@ -123,7 +134,8 @@ class Consumer(User):
             'gender' : self.gender,
             'interests' : [{'id' : cat.id, 'name' : cat.name} for cat in self.interests],
             'fav_courses' : [course.id for course in self.fav_courses],
-            'bookmarks' : [course.id for course in self.bookmarks]
+            'bookmarks' : [course.id for course in self.bookmarks],
+            'image' : self.static_path(PictureSize.consumer_icon)
         }
 
 class Provider(User):

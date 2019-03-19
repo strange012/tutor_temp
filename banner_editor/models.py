@@ -42,10 +42,58 @@ course_category_course = Table(
     Column('course_id', Integer, ForeignKey('course.id'))
 )
 
-class Course(Base):
+class Image(object):
+    def __init__(self):
+        self.__tablename__ = 'image'
+        self.id = 0
+        self.image = ''
+
+    def path_string(self):
+        return 'None'
+
+    def full_path(self):
+        path = os.path.join(
+            os.getcwd(),
+            'banner_editor',
+            'static',
+            self.__tablename__,
+            self.path_string()[0] if (self.path_string()[0] in (
+                string.ascii_letters + string.digits)) else '?',
+            self.path_string()[1] if (self.path_string()[1] in (
+                string.ascii_letters + string.digits)) else '?',
+            str(self.id)
+        )
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        return path
+
+    def static_path(self, size):
+        if self.image:
+            path = os.path.join(
+                'static',
+                self.__tablename__,
+                self.path_string()[0] if (self.path_string()[0] in (
+                    string.ascii_letters + string.digits)) else '?',
+                self.path_string()[1] if (self.path_string()[1] in (
+                    string.ascii_letters + string.digits)) else '?',
+                str(self.id)
+            )
+            full_path = self.full_path()
+            filename = size.name + self.image[self.image.find('.'):]
+            try:
+                if not os.path.isfile(os.path.join(full_path, filename)):
+                    image_resize(self.full_path(), self.image, filename, size)
+            except IOError:
+                return ''
+            return os.path.join(os.path.sep, path, filename)
+        return ''
+ 
+class Course(Base, Image):
     __tablename__ = 'course'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
+    def path_string(self):
+        return self.name
     author = Column(String)
     provider_id = Column(Integer, ForeignKey('provider.id'))
     course_categories = relationship(
@@ -74,43 +122,6 @@ class Course(Base):
         server_default=func.now(),
         onupdate=func.now()
     )
-
-    def full_path(self):
-        path = os.path.join(
-            os.getcwd(),
-            'banner_editor',
-            'static',
-            'course',
-            self.name[0] if (self.name[0] in (
-                string.ascii_letters + string.digits)) else '?',
-            self.name[1] if (self.name[1] in (
-                string.ascii_letters + string.digits)) else '?',
-            str(self.id)
-        )
-        if not os.path.isdir(path):
-            os.makedirs(path)
-        return path
-
-    def static_path(self, size):
-        if self.image:
-            path = os.path.join(
-                'static',
-                'course',
-                self.name[0] if (self.name[0] in (
-                    string.ascii_letters + string.digits)) else '?',
-                self.name[1] if (self.name[1] in (
-                    string.ascii_letters + string.digits)) else '?',
-                str(self.id)
-            )
-            full_path = self.full_path()
-            filename = size.name + self.image[self.image.find('.'):]
-            try:
-                if not os.path.isfile(os.path.join(full_path, filename)):
-                    image_resize(self.full_path(), self.image, filename, size)
-            except IOError:
-                return ''
-            return os.path.join(os.path.sep, path, filename)
-        return ''
 
     def to_json(self):
         return {

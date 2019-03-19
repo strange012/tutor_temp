@@ -3,7 +3,7 @@ from pyramid.view import view_config
 
 from exceptions import IOError
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, text
 
 from functools import partial, wraps
 
@@ -218,6 +218,26 @@ def json_match(f=None, schema={}):
             return {'msg' :  MESSAGES['request'], 'err' : e.message}
     return decorated_function
 
+def image_match(f=None):
+    if f is None:
+        return partial(image_match)
+        
+    @wraps(f)
+    def decorated_function(request):
+        try:
+            return f(request)
+        except IOError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['file']}
+        except SQLAlchemyError as e:
+            LOG.exception(e.message)
+            request.response.status = 500
+            return {'msg' :  MESSAGES['db']}
+    return decorated_function
+
+
+
 @view_config(route_name='get_id', permission='view', renderer='json')
 def get_id(request):
     try:
@@ -270,7 +290,7 @@ def consumer_add(request):
     DBSession.add(consumer)
     DBSession.flush()
     request.response.status = 200
-    return {'msg' : MESSAGES['ok']}  
+    return {'consumer_id' : consumer.id}  
  
    
 @view_config(route_name='consumer_edit', permission='view', renderer='json')
@@ -356,7 +376,6 @@ def consumer_fav_add(request):
         return {'msg' : MESSAGES['db']} 
 
 
-
 @view_config(route_name='consumer_fav_remove', permission='view', renderer='json')
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
@@ -418,13 +437,54 @@ def consumer_bookmark_remove(request):
         request.response.status = 500
         return {'msg' : MESSAGES['db']} 
 
+
+import json
+
 @view_config(route_name='consumer_feed', renderer='json')
 @user_id_match
 def consumer_feed(request):
     consumer = DBSession.query(Consumer).get(request.matchdict['id'])
-    DBSession.query(Course).filter(Course.language in consumer.languages)
+    interests = [x.id for x in consumer.interests]
+    q = DBSession.query(Course.id, course_category_course.c.course_category_id)\
+        .filter(Course.language.in_(consumer.languages))\
+        .join(course_category_course, Course.id == course_category_course.c.course_id)\
+        .subquery()
+
+    feed = DBSession.query(q.c.id.label('course_id'), func.count().label('score'))\
+        .filter(q.c.course_category_id.in_(interests))\
+        .group_by(q.c.id)\
+        .order_by(text('score DESC'))\
+        .all()
     request.response.status = 200
-    return {'msg' : MESSAGES['db']} 
+    return [DBSession.query(Course).get(course[0]).to_json() for course in feed]
+
+@view_config(route_name='consumer_image_add', content_type='image/*', permission='view', renderer='json')
+@user_id_match
+@image_match
+def consumer_image_add(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    image = request.body_file
+    filename = 'original.' + request.content_type[6:]
+    consumer.image = filename
+    path = consumer.full_path()
+    if os.path.isdir(path):
+        delete_contents(path)
+    file_path = os.path.join(consumer.full_path(), filename)
+    with open(file_path, 'wb') as f:
+        shutil.copyfileobj(image, f)
+    DBSession.flush()
+
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
+
+@view_config(route_name='consumer_image_remove', permission='view', renderer='json')
+@user_id_match
+def consumer_image_remove(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer.image = None
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
 
 @view_config(route_name='provider_add', renderer='json')
 @json_match(schema=provider_schema)
@@ -442,7 +502,7 @@ def provider_add(request):
     DBSession.add(provider)
     DBSession.flush()
     request.response.status = 200
-    return {'msg' : MESSAGES['ok']}  
+    return {'provider_id' : provider.id}  
         
 @view_config(route_name='provider_edit', permission='add', renderer='json')
 @user_id_match
@@ -508,7 +568,7 @@ def course_add(request):
     ])
             
     request.response.status = 200
-    return {'msg' : MESSAGES['ok']}  
+    return {'course_id' : course.id}  
 
 @view_config(route_name='course_edit', permission='add', renderer='json')
 @user_id_match
@@ -577,34 +637,25 @@ def course_view(request):
 @view_config(route_name='course_image_add', content_type='image/*', permission='add', renderer='json')
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
+@image_match
 def course_image_add(request):
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     if course.provider_id is not int(request.matchdict['id']):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
-    try:
-        image = request.body_file
-        filename = 'original.' + request.content_type[6:]
-        course.image = filename
-        path = course.full_path()
-        if os.path.isdir(path):
-            delete_contents(path)
-        file_path = os.path.join(course.full_path(), filename)
-        with open(file_path, 'wb') as f:
-            shutil.copyfileobj(image, f)
-        DBSession.flush()
+    image = request.body_file
+    filename = 'original.' + request.content_type[6:]
+    course.image = filename
+    path = course.full_path()
+    if os.path.isdir(path):
+        delete_contents(path)
+    file_path = os.path.join(course.full_path(), filename)
+    with open(file_path, 'wb') as f:
+        shutil.copyfileobj(image, f)
+    DBSession.flush()
 
-        request.response.status = 200
-        return {'msg' : MESSAGES['ok']} 
-        
-    except IOError as e:
-        LOG.exception(e.message)
-        request.response.status = 500
-        return {'msg' :  MESSAGES['file']}
-    except SQLAlchemyError as e:
-        LOG.exception(e.message)
-        request.response.status = 500
-        return {'msg' :  MESSAGES['db']}
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
 
 @view_config(route_name='course_image_remove', permission='add', renderer='json')
 @user_id_match

@@ -28,7 +28,8 @@ from ..models import (
 from ..security import (
     User,
     Provider,
-    Consumer
+    Consumer,
+    consumer_interests
 )
 
 
@@ -90,7 +91,8 @@ def main(argv=sys.argv):
             group='consumer',
             first_name='Ivan',
             second_name='Fighter',
-            gender='male'
+            gender='male',
+            languages=['English']
         )
 
         DBSession.add(admin)
@@ -116,14 +118,20 @@ def main(argv=sys.argv):
             {'course_category_id': y, 'course_id': x} for x, y in cat_course
         ])
         
-        
+        DBSession.execute(consumer_interests.insert(), [
+            {'consumer_id': 3, 'course_category_id': 1},
+            {'consumer_id': 3, 'course_category_id': 2},
+            {'consumer_id': 3, 'course_category_id': 5},
+            {'consumer_id': 3, 'course_category_id': 6}
+        ])
 
 
         course = Course(
             name='Naturalistic fighting',
             provider_id=provider.id,
             description='We will teach you how to fight with nature',
-            complexity=4
+            complexity=4,
+            language='English'
         )
 
         teacher = Teacher(

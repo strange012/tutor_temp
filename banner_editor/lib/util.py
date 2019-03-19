@@ -20,6 +20,7 @@ def delete_contents(folder):
 
 class PictureSize(Enum):
     course_icon = (256, 256)
+    consumer_icon = (512, 512)
 
 
 def image_resize(path, img_name, resized_name, size):
