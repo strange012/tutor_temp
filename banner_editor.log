@@ -2754,3 +2754,120 @@ HINT:  You will need to rewrite or cast the expression.
 [SQL: INSERT INTO consumer (id, first_name, second_name, gender, languages) VALUES (%(id)s, %(first_name)s, %(second_name)s, %(gender)s, %(languages)s)]
 [parameters: {'languages': ['ru'], 'gender': u'other', 'first_name': u'Gay', 'id': 10, 'second_name': u'Orgy'}]
 (Background on this error at: http://sqlalche.me/e/f405)
+2019-03-19 19:40:11,403 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 460, in rendered_view
+    request, result, view_inst, context
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 451, in render_view
+    return self.render_to_response(response, system, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 474, in render_to_response
+    result = self.render(value, system_values, request=request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 470, in render
+    result = renderer(value, system_values)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 284, in _render
+    return self.serializer(value, default=default, **self.kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 251, in dumps
+    sort_keys=sort_keys, **kw).encode(obj)
+  File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/renderers.py", line 298, in default
+    raise TypeError('%r is not JSON serializable' % (obj,))
+TypeError: datetime.datetime(2019, 3, 19, 19, 29, 44, 572699) is not JSON serializable
+2019-03-19 19:49:34,927 ERROR [waitress][waitress] Exception when serving /provider/4/course/2/image/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 188, in attr_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 214, in predicate_wrapper
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 182, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 199, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 585, in course_image_add
+    image.seek(0)
+AttributeError: 'str' object has no attribute 'seek'
+2019-03-19 19:50:40,496 ERROR [banner_editor.views][waitress] seek
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 585, in course_image_add
+    image.seek(0)
+UnsupportedOperation: seek
+2019-03-19 19:51:18,799 ERROR [banner_editor.views][waitress] 
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 585, in course_image_add
+    with open(file_path, 'wb') as f:
+IOError: [Errno 2] No such file or directory: u'/home/master/banner_editor/banner_editor/static/course/C/o/2/original.ation/x-www-form-urlencoded'
+2019-03-19 19:56:32,304 ERROR [banner_editor.views][waitress] 
+Traceback (most recent call last):
+  File "/home/master/banner_editor/banner_editor/views.py", line 585, in course_image_add
+    with open(file_path, 'wb') as f:
+IOError: [Errno 2] No such file or directory: u'/home/master/banner_editor/banner_editor/static/course/C/o/2/original./png'

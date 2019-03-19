@@ -57,7 +57,8 @@ MESSAGES = {
     'course_id' : 'Invalid course ID',
     'course_category_id' : 'Invalid course category ID',
     'lesson_id' : 'Invalid lesson ID',
-    'teacher_id' : 'Invalid teacher ID'
+    'teacher_id' : 'Invalid teacher ID',
+    'file' : 'Could not save the file'
 }
 
 LANGUAGES = ['Russian', 'English', 'German', 'Spanish', 'French']
@@ -107,7 +108,7 @@ login_schema = {
 course_schema = {
     'type' : 'object',
     'properties' : {
-        'name' : {'type' : 'string'},
+        'name' : {'type' : 'string', 'minLength' : 2},
         'author' : {'type' : 'string'},
         'link' : {'type' : 'string'},
         'description' : {'type' : 'string'},
@@ -490,6 +491,7 @@ def course_add(request):
     course.author = request.json['author']
     course.language = request.json['language']
     course.link = request.json['link']
+    course.provider_id = request.matchdict['id']
     DBSession.add(course)
     DBSession.flush()
 
@@ -563,6 +565,51 @@ def course_view(request):
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     request.response.status = 200
     return course.to_json()
+
+@view_config(route_name='course_image_add', accept='image/*', permission='add', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def course_image_add(request):
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course.provider_id is not int(request.matchdict['id']):
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+    try:
+        image = request.body_file
+        filename = 'original.' + request.content_type[6:]
+        course.image = filename
+        path = course.full_path()
+        if os.path.isdir(path):
+            delete_contents(path)
+        file_path = os.path.join(course.full_path(), filename)
+        with open(file_path, 'wb') as f:
+            shutil.copyfileobj(image, f)
+        DBSession.flush()
+
+        request.response.status = 200
+        return {'msg' : MESSAGES['ok']} 
+        
+    except IOError as e:
+        LOG.exception(e.message)
+        request.response.status = 500
+        return {'msg' :  MESSAGES['file']}
+    except SQLAlchemyError as e:
+        LOG.exception(e.message)
+        request.response.status = 500
+        return {'msg' :  MESSAGES['db']}
+
+@view_config(route_name='course_image_remove', permission='add', renderer='json')
+@user_id_match
+@obj_id_match(oid='course_id', Obj=Course)
+def course_image_remove(request):
+    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    if course.provider_id is not request.matchdict['id']:
+        request.response.status = 403
+        return {'msg' :  MESSAGES['access']}
+    course.image = None
+    DBSession.flush()
+    request.response.status = 200
+    return {'msg' : MESSAGES['ok']} 
 
 @view_config(route_name='course_filter', permission='view', renderer='json')
 @json_match(schema=course_filter_schema)
@@ -789,3 +836,8 @@ def course_comments_view(request):
         'count' : len(course.comments),
         'comments' : [comment.to_json() for comment in course.comments]
     }
+
+@view_config(renderer='json')
+def unacceptable(request):
+    request.response.status = 400
+    return {'msg' :  MESSAGES['request']}

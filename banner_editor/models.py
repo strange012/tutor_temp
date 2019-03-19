@@ -56,10 +56,62 @@ class Course(Base):
     link = Column(String)
     description = Column(String)
     complexity = Column(Integer)
-    language = Column(String)
     image = Column(Text)
+    language = Column(String)
     lessons = relationship('Lesson', backref='course')
     comments = relationship('Comment', backref='course')
+
+    date_created = Column(
+        DateTime,
+        default=func.now(),
+        nullable=False,
+        server_default=func.now()
+    )
+    date_edited = Column(
+        DateTime,
+        default=func.now(),
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now()
+    )
+
+    def full_path(self):
+        path = os.path.join(
+            os.getcwd(),
+            'banner_editor',
+            'static',
+            'course',
+            self.name[0] if (self.name[0] in (
+                string.ascii_letters + string.digits)) else '?',
+            self.name[1] if (self.name[1] in (
+                string.ascii_letters + string.digits)) else '?',
+            str(self.id)
+        )
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        return path
+
+    def static_path(self, size):
+        if self.image:
+            path = os.path.join(
+                'static',
+                'course',
+                self.name[0] if (self.name[0] in (
+                    string.ascii_letters + string.digits)) else '?',
+                self.name[1] if (self.name[1] in (
+                    string.ascii_letters + string.digits)) else '?',
+                str(self.id)
+            )
+            full_path = self.full_path()
+            filename = size.name + self.image[self.image.find('.'):]
+            try:
+                if not os.path.isfile(os.path.join(full_path, filename)):
+                    image_resize(self.full_path(), self.image, filename, size)
+            except IOError:
+                return ''
+            return os.path.join(os.path.sep, path, filename)
+        return ''
+
     def to_json(self):
         return {
             'course_id' : self.id,
@@ -67,12 +119,14 @@ class Course(Base):
             'author' : self.author,
             'provider_id' : self.provider_id,
             'description' : self.description,
+            'date_created' : self.date_created.strftime("%Y-%m-%d %H:%M:%S"),
             'complexity' : self.complexity,
             'language' : self.language,
             'lessons' : [lesson.id for lesson in self.lessons],
             'course_categories' : [cat.id for cat in self.course_categories],
             'favs' : [consumer.id for consumer in self.consumers_fav],
-            'bookmarks' : [consumer.id for consumer in self.consumers_bookmark]
+            'bookmarks' : [consumer.id for consumer in self.consumers_bookmark],
+            'image' : self.static_path(PictureSize.course_icon)
         }
 
 class Lesson(Base):

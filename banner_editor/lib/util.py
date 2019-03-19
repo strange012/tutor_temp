@@ -19,12 +19,10 @@ def delete_contents(folder):
 
 
 class PictureSize(Enum):
-    list_icon = (144, 54)
-    edit_image = (640, 240)
-    rotator_banner = (1600, 600)
+    course_icon = (256, 256)
 
 
-def image_resize(path, filename, size):
-    image = Image.open(os.path.join(path, filename))
+def image_resize(path, img_name, resized_name, size):
+    image = Image.open(os.path.join(path, img_name))
     image = image.resize(size.value, Image.NEAREST)
-    image.save(os.path.join(path, size.name, filename))
+    image.save(os.path.join(path, resized_name))

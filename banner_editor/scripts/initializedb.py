@@ -59,9 +59,11 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)    
     Base.metadata.drop_all(engine)
-    # static_folder = os.path.join(
-    #     os.getcwd(), "banner_editor", "static", "banners")
-    # delete_contents(static_folder)
+    static_folder = os.path.join(
+        os.getcwd(), "banner_editor", "static")
+    if not os.path.isdir(static_folder):
+        os.makedirs(static_folder) 
+    delete_contents(static_folder)
     Base.metadata.create_all(engine)
     with transaction.manager:
         admin = Provider(

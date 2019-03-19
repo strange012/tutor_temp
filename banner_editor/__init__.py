@@ -59,6 +59,8 @@ def main(global_config, **settings):
         config.add_route('provider_view', '/provider/{id}/view')
 
         config.add_route('course_add', 'provider/{id}/course/add')
+        config.add_route('course_image_add', 'provider/{id}/course/{course_id}/image/add')
+        config.add_route('course_image_remove', 'provider/{id}/course/{course_id}/image/remove')
         config.add_route('course_edit', 'provider/{id}/course/{course_id}/edit')
         config.add_route('course_remove', 'provider/{id}/course/{course_id}/remove')
         config.add_route('course_view', 'course/{course_id}/view')
