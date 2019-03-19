@@ -2871,3 +2871,159 @@ Traceback (most recent call last):
   File "/home/master/banner_editor/banner_editor/views.py", line 585, in course_image_add
     with open(file_path, 'wb') as f:
 IOError: [Errno 2] No such file or directory: u'/home/master/banner_editor/banner_editor/static/course/C/o/2/original./png'
+2019-03-19 20:39:33,322 ERROR [waitress][waitress] Exception when serving /provider/4/course/2/image/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 188, in attr_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 208, in predicate_wrapper
+    if not predicate(context, request):
+  File "/home/master/banner_editor/banner_editor/security.py", line 43, in __call__
+    print(m2.group(1))
+AttributeError: 'NoneType' object has no attribute 'group'
+2019-03-19 20:39:54,237 ERROR [waitress][waitress] Exception when serving /provider/4/course/2/image/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 188, in attr_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 208, in predicate_wrapper
+    if not predicate(context, request):
+  File "/home/master/banner_editor/banner_editor/security.py", line 40, in __call__
+    return (m1.group(1) == m2.group(1)) and (m2.group(2) in self.TYPES[m1.group(1)])
+AttributeError: 'NoneType' object has no attribute 'group'
+2019-03-19 20:40:55,277 ERROR [waitress][waitress] Exception when serving /provider/4/course/2/image/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 188, in attr_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 208, in predicate_wrapper
+    if not predicate(context, request):
+  File "/home/master/banner_editor/banner_editor/security.py", line 43, in __call__
+    print(m2.group(1))
+AttributeError: 'NoneType' object has no attribute 'group'
+2019-03-19 20:42:46,312 ERROR [waitress][waitress] Exception when serving /provider/4/course/2/image/add
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 188, in attr_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/config/views.py", line 208, in predicate_wrapper
+    if not predicate(context, request):
+  File "/home/master/banner_editor/banner_editor/security.py", line 41, in __call__
+    return m1.group(0) and m2.group(0) and (m1.group(1) == m2.group(1)) and (m2.group(2) in self.TYPES[m1.group(1)])
+AttributeError: 'NoneType' object has no attribute 'group'

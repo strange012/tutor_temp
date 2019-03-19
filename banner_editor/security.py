@@ -1,5 +1,5 @@
 import bcrypt
-
+import re
 from sqlalchemy import (
     Column,
     Integer,
@@ -17,6 +17,27 @@ from pyramid.security import (
     Allow
 )
 
+class ContentTypePredicate(object):
+    def __init__(self, val, config):
+        self.any_char = val.find('*')
+        self.val = val
+
+    TYPES = {
+        'image' : ['png', 'jpeg', 'jpg', 'gif']
+    }
+    def text(self):
+        return 'content type = %s' % self.val
+    phash = text
+
+    def __call__(self, context, request):
+        if self.any_char < 0:
+            return request.content_type == self.val
+        else:
+            p1 = re.compile('([a-zA-Z]+)/*')
+            m1 = p1.match(self.val)
+            p2 = re.compile('([a-zA-Z]+)/([a-zA-Z]+)')
+            m2 = p2.match(request.content_type)
+            return m1 and m2 and (m1.group(1) == m2.group(1)) and (m2.group(2) in self.TYPES[m1.group(1)])
 
 class Root(object):
     __name__ = ''

@@ -566,7 +566,7 @@ def course_view(request):
     request.response.status = 200
     return course.to_json()
 
-@view_config(route_name='course_image_add', accept='image/*', permission='add', renderer='json')
+@view_config(route_name='course_image_add', content_type='image/*', permission='add', renderer='json')
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def course_image_add(request):
@@ -836,8 +836,3 @@ def course_comments_view(request):
         'count' : len(course.comments),
         'comments' : [comment.to_json() for comment in course.comments]
     }
-
-@view_config(renderer='json')
-def unacceptable(request):
-    request.response.status = 400
-    return {'msg' :  MESSAGES['request']}

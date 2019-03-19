@@ -14,7 +14,8 @@ from .models import (
 
 from .security import (
     groupfinder,
-    Root
+    Root,
+    ContentTypePredicate
 )
 
 def main(global_config, **settings):
@@ -34,7 +35,8 @@ def main(global_config, **settings):
     with Configurator(settings=settings) as config:
 
         config.add_static_view('static', 'static', cache_max_age=3600)
-
+        config.add_view_predicate('content_type', ContentTypePredicate)
+        
         config.add_route('get_id', '/')
 
         config.add_route('login', '/login')
