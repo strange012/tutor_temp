@@ -117,6 +117,7 @@ class Course(Base):
             'course_id' : self.id,
             'name' : self.name,
             'author' : self.author,
+            'link' : self.link,
             'provider_id' : self.provider_id,
             'description' : self.description,
             'date_created' : self.date_created.strftime("%Y-%m-%d %H:%M:%S"),

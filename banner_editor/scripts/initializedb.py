@@ -2,6 +2,7 @@ import os
 import sys
 import transaction
 import string
+import json
 
 from sqlalchemy import engine_from_config
 
@@ -91,13 +92,23 @@ def main(argv=sys.argv):
             gender='male'
         )
 
-
         DBSession.add(admin)
+
+
         DBSession.add(provider)
         DBSession.add(consumer)
-
         DBSession.flush()
         
+        with open('data.json') as f:
+            json_data = f.read()
+        data = json.loads(json_data)
+        DBSession.execute(CourseCategory.__table__.insert(), data['categories'])
+
+        DBSession.execute(Course.__table__.insert(), data['courses'])
+
+        
+
+
         course = Course(
             name='Naturalistic fighting',
             provider_id=provider.id,

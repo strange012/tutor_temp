@@ -1,0 +1,132 @@
+{
+    "courses" : [
+                    {
+                        "provider_id" : 1,
+                        "name" : "How Things Work: An Introduction to Physics",
+                        "author" : "University of Virginia",
+                        "link" : "https://google.com",
+                        "description" : "An introduction to physics in the context of everyday objects.",
+                        "complexity" : 4,
+                        "course_categories" :[ 1 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Self-Driving Cars Specialization",
+                        "author" : "University of Toronto",
+                        "link" : "https://www.coursera.org/specializations/self-driving-cars",
+                        "description" : "Be at the forefront of the autonomous driving industry. With market researchers predicting a $42-billion market and more than 20 million self-driving cars on the road by 2025, the next big job boom is right around the corner.\n\nThis Specialization gives you a comprehensive understanding of state-of-the-art engineering practices used in the self-driving car industry. You'll get to interact with real data sets from an autonomous vehicle (AV)―all through hands-on projects using the open source simulator CARLA",
+                        "complexity" : 5,
+                        "course_categories" :[ 1 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Robotics Specialization",
+                        "author" : "University of Pennsylvania",
+                        "link" : "https://www.coursera.org/specializations/robotics",
+                        "description" : "The Introduction to Robotics Specialization introduces you to the concepts of robot flight and movement, how robots perceive their environment, and how they adjust their movements to avoid obstacles, navigate difficult terrains and accomplish complex tasks such as construction and disaster recovery. You will be exposed to real world examples of how robots have been applied in disaster situations, how they have made advances in human health care and what their future capabilities will be. The courses build towards a capstone in which you will learn how to program a robot to perform a variety of movements such as flying and grasping objects.",
+                        "complexity" : 1,
+                        "course_categories" :[ 1 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Computer Architecture",
+                        "author" : "Princeton University",
+                        "link" : "https://www.coursera.org/learn/comparch",
+                        "description" : "In this course, you will learn to design the computer architecture of complex modern microprocessors.\n\nAll the features of this course are available for free.  It does not offer a certificate upon completion.",
+                        "complexity" : 5,
+                        "course_categories" :[ 1 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Введение в математические методы физики",
+                        "author" : "Higher School of Economics",
+                        "link" : "https://www.coursera.org/learn/vvedenie-v-mat-metody",
+                        "description" : "Цель курса - дать слушателям начальные представления и навыки обращения с приближенными аналитическими вычислениями. Такие методы широко используются в практической работе физиков, но почти не излагаются в регулярных лекционных курсах, что препятствует включению студентов в исследовательский процесс. Большинство лекций также содержат в себе семинарскую часть с разбором задач. Важная часть курса – полноценные задачи для самостоятельного решения с целью закрепления практических навыков применения излагаемых методов вычислений. Предполагается, что слушатели знакомы с основами стандартных математических курсов: математического анализа, линейной алгебры, обыкновенных дифференциальных уравнений.",
+                        "complexity" : 3,
+                        "course_categories" :[ 1 ],
+                        "language" : "Russian"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Астрофизика: от звезд до границ Вселенной",
+                        "author" : "Princeton University",
+                        "link" : "https://www.coursera.org/learn/astrofizika",
+                        "description" : "Этот курс посвящен ключевым проблемам современной астрофизики: рождению, эволюции и финальной стадии жизни звезд.\nНекоторые из них, например, нейтронные звезды отличаются сверхвысокой плотностью вещества и сверхсильными магнитными полями — такие условия пока недостижимы для современных лабораторий. Как же ученые исследуют эти объекты?\nВ курсе вы познакомитесь с работой специалистов астрофизики высоких энергий и нейтринной астрономии и разберетесь, зачем люди изучают вспышки сверхновых, ускорение заряженных частиц на космических ударных волнах и высокоэнергитичные нейтрино.\nА главы, посвященные теоретической и наблюдательной космологии, объяснят, как эта наука отвечает на вопросы о рождении Вселенной, динамике ее расширения и о формах материи ее заполняющих.",
+                        "complexity" : 1,
+                        "course_categories" :[ 1 ],
+                        "language" : "Russian"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Introduction to Psychology",
+                        "author" : "Yale University",
+                        "link" : "https://www.coursera.org/learn/introduction-psychology",
+                        "description" : "What are people most afraid of? What do our dreams mean? Are we natural-born racists? What makes us happy? What are the causes and cures of mental illness? This course tries to answer these questions and many others, providing a comprehensive overview of the scientific study of thought and behavior. It explores topics such as perception, communication, learning, memory, decision-making, persuasion, emotions, and social behavior.  We will look at how these aspects of the mind develop in children, how they differ across people, how they are wired-up in the brain, and how they break down due to illness and injury.",
+                        "complexity" : 1,
+                        "course_categories" :[ 2 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Stanford Introduction to Food and Health",
+                        "author" : "Stanford University",
+                        "link" : "https://www.coursera.org/learn/food-and-health",
+                        "description" : "In this course, learners will be given the information and practical skills they need to begin optimizing the way they eat. This course will shift the focus away from reductionist discussions about nutrients and move, instead, towards practical discussions about real food and the environment in which we consume it. By the end of this course, learners should have the tools they need to distinguish between foods that will support their health and those that threaten it. In addition, we will present a compelling rationale for a return to simple home cooking, an integral part of our efforts to live longer, healthier lives.",
+                        "complexity" : 3,
+                        "course_categories" :[ 2 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Science of Exercise",
+                        "author" : "University of Colorado Boulder",
+                        "link" : "https://www.coursera.org/learn/science-exercise",
+                        "description" : "Learners who complete Science of Exercise will have an improved physiological understanding of how your body responds to exercise, and will be able to identify behaviors, choices, and environments that impact your health and training. You will explore a number of significant adjustments required by your body in order to properly respond to the physical stress of exercise, including changes in carbohydrate, fat and protein metabolism, nutritional considerations, causes of muscle soreness & fatigue, and the effectiveness and dangers of performance enhancing drugs.",
+                        "complexity" : 3,
+                        "course_categories" :[ 2 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Machine Learning",
+                        "author" : "Stanford University",
+                        "link" : "https://www.coursera.org/learn/machine-learning",
+                        "description" : "This course provides a broad introduction to machine learning, datamining, and statistical pattern recognition. Topics include: (i) Supervised learning (parametric/non-parametric algorithms, support vector machines, kernels, neural networks). (ii) Unsupervised learning (clustering, dimensionality reduction, recommender systems, deep learning). (iii) Best practices in machine learning (bias/variance theory; innovation process in machine learning and AI).",
+                        "complexity" : 1,
+                        "course_categories" :[ 3 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Python for Everybody",
+                        "author" : "University of Michigan",
+                        "link" : "https://www.coursera.org/specializations/python",
+                        "description" : "This Specialization builds on the success of the Python for Everybody course and will introduce fundamental programming concepts including data structures, networked application program interfaces, and databases, using the Python programming language. In the Capstone Project, you’ll use the technologies learned throughout the Specialization to design and create your own applications for data retrieval, processing, and visualization.",
+                        "complexity" : 1,
+                        "course_categories" :[ 4 ],
+                        "language" : "English"
+                    }
+                ],
+    "categories" : [
+        {
+            "name": "Physical Science and Engineering",
+            "description": ""
+        },
+        {
+            "name": "Health",
+            "description": ""
+        },
+        {
+            "name": "Data Science",
+            "description": ""
+        },
+        {
+            "name": "Computer Science",
+            "description": ""
+        }
+    ]
+}
