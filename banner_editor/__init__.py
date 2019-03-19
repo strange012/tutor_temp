@@ -36,7 +36,7 @@ def main(global_config, **settings):
 
         config.add_static_view('static', 'static', cache_max_age=3600)
         config.add_view_predicate('content_type', ContentTypePredicate)
-        
+
         config.add_route('get_id', '/')
 
         config.add_route('login', '/login')
@@ -46,6 +46,8 @@ def main(global_config, **settings):
         config.add_route('consumer_edit', '/consumer/{id}/edit')
         config.add_route('consumer_remove', '/consumer/{id}/remove')
         config.add_route('consumer_view', '/consumer/{id}/view')
+        
+        config.add_route('consumer_feed', '/consumer/{id}/feed')
 
         config.add_route('consumer_favs_view', '/consumer/{id}/fav/view')
         config.add_route('consumer_fav_add', '/consumer/{id}/fav/{course_id}/add')

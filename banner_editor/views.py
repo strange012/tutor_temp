@@ -418,6 +418,14 @@ def consumer_bookmark_remove(request):
         request.response.status = 500
         return {'msg' : MESSAGES['db']} 
 
+@view_config(route_name='consumer_feed', renderer='json')
+@user_id_match
+def consumer_feed(request):
+    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    
+    request.response.status = 200
+    return {'msg' : MESSAGES['db']} 
+
 @view_config(route_name='provider_add', renderer='json')
 @json_match(schema=provider_schema)
 def provider_add(request):
