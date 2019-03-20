@@ -2,62 +2,32 @@
     "courses" : [
                     {
                         "provider_id" : 1,
-                        "name" : "How Things Work: An Introduction to Physics",
-                        "author" : "University of Virginia",
-                        "link" : "https://google.com",
-                        "description" : "An introduction to physics in the context of everyday objects.",
-                        "complexity" : 4,
-                        "course_categories" :[ 1, 5],
-                        "language" : "English"
-                    },
-                    {
-                        "provider_id" : 1,
-                        "name" : "Self-Driving Cars Specialization",
-                        "author" : "University of Toronto",
-                        "link" : "https://www.coursera.org/specializations/self-driving-cars",
-                        "description" : "Be at the forefront of the autonomous driving industry. With market researchers predicting a $42-billion market and more than 20 million self-driving cars on the road by 2025, the next big job boom is right around the corner.\n\nThis Specialization gives you a comprehensive understanding of state-of-the-art engineering practices used in the self-driving car industry. You'll get to interact with real data sets from an autonomous vehicle (AV)―all through hands-on projects using the open source simulator CARLA",
-                        "complexity" : 5,
-                        "course_categories" :[ 1, 2 , 5 ],
-                        "language" : "English"
-                    },
-                    {
-                        "provider_id" : 1,
-                        "name" : "Robotics Specialization",
-                        "author" : "University of Pennsylvania",
-                        "link" : "https://www.coursera.org/specializations/robotics",
-                        "description" : "The Introduction to Robotics Specialization introduces you to the concepts of robot flight and movement, how robots perceive their environment, and how they adjust their movements to avoid obstacles, navigate difficult terrains and accomplish complex tasks such as construction and disaster recovery. You will be exposed to real world examples of how robots have been applied in disaster situations, how they have made advances in human health care and what their future capabilities will be. The courses build towards a capstone in which you will learn how to program a robot to perform a variety of movements such as flying and grasping objects.",
+                        "name" : "Astronomy: Exploring Time and Space",
+                        "author" : "University of Arizona",
+                        "link" : "https://coursera.org/learn/astro",
+                        "description" : "This course is designed for anyone who is interested in learning more about modern astronomy. We will help you get up to date on the most recent astronomical discoveries while also providing support at an introductory level for those who have no background in science.",
                         "complexity" : 1,
-                        "course_categories" :[ 1 , 3 , 6],
+                        "course_categories" :[ 1 ],
                         "language" : "English"
                     },
                     {
                         "provider_id" : 1,
-                        "name" : "Computer Architecture",
-                        "author" : "Princeton University",
-                        "link" : "https://www.coursera.org/learn/comparch",
-                        "description" : "In this course, you will learn to design the computer architecture of complex modern microprocessors.\n\nAll the features of this course are available for free.  It does not offer a certificate upon completion.",
-                        "complexity" : 5,
-                        "course_categories" :[ 1, 2 ,3 ,5 ],
-                        "language" : "English"
-                    },
-                    {
-                        "provider_id" : 1,
-                        "name" : "Введение в математические методы физики",
-                        "author" : "Higher School of Economics",
-                        "link" : "https://www.coursera.org/learn/vvedenie-v-mat-metody",
-                        "description" : "Цель курса - дать слушателям начальные представления и навыки обращения с приближенными аналитическими вычислениями. Такие методы широко используются в практической работе физиков, но почти не излагаются в регулярных лекционных курсах, что препятствует включению студентов в исследовательский процесс. Большинство лекций также содержат в себе семинарскую часть с разбором задач. Важная часть курса – полноценные задачи для самостоятельного решения с целью закрепления практических навыков применения излагаемых методов вычислений. Предполагается, что слушатели знакомы с основами стандартных математических курсов: математического анализа, линейной алгебры, обыкновенных дифференциальных уравнений.",
+                        "name" : "The Evolving Universe",
+                        "author" : "Caltech",
+                        "link" : "https://coursera.org/learn/evolvinguniverse",
+                        "description" : "This is an introductory astronomy survey class that covers our understanding of the physical universe and its major constituents, including planetary systems, stars, galaxies, black holes, quasars, larger structures, and the universe as a whole.",
                         "complexity" : 3,
-                        "course_categories" :[ 1, 2, 4 ],
-                        "language" : "Russian"
+                        "course_categories" :[ 1 ],
+                        "language" : "English"
                     },
                     {
                         "provider_id" : 1,
                         "name" : "Астрофизика: от звезд до границ Вселенной",
-                        "author" : "Princeton University",
+                        "author" : "Polytech",
                         "link" : "https://www.coursera.org/learn/astrofizika",
                         "description" : "Этот курс посвящен ключевым проблемам современной астрофизики: рождению, эволюции и финальной стадии жизни звезд.\nНекоторые из них, например, нейтронные звезды отличаются сверхвысокой плотностью вещества и сверхсильными магнитными полями — такие условия пока недостижимы для современных лабораторий. Как же ученые исследуют эти объекты?\nВ курсе вы познакомитесь с работой специалистов астрофизики высоких энергий и нейтринной астрономии и разберетесь, зачем люди изучают вспышки сверхновых, ускорение заряженных частиц на космических ударных волнах и высокоэнергитичные нейтрино.\nА главы, посвященные теоретической и наблюдательной космологии, объяснят, как эта наука отвечает на вопросы о рождении Вселенной, динамике ее расширения и о формах материи ее заполняющих.",
                         "complexity" : 1,
-                        "course_categories" :[ 1, 5, 2, 3 ],
+                        "course_categories" :[ 1 ],
                         "language" : "Russian"
                     },
                     {
@@ -67,7 +37,7 @@
                         "link" : "https://www.coursera.org/learn/introduction-psychology",
                         "description" : "What are people most afraid of? What do our dreams mean? Are we natural-born racists? What makes us happy? What are the causes and cures of mental illness? This course tries to answer these questions and many others, providing a comprehensive overview of the scientific study of thought and behavior. It explores topics such as perception, communication, learning, memory, decision-making, persuasion, emotions, and social behavior.  We will look at how these aspects of the mind develop in children, how they differ across people, how they are wired-up in the brain, and how they break down due to illness and injury.",
                         "complexity" : 1,
-                        "course_categories" :[ 2, 4, 6 ],
+                        "course_categories" :[ 2 ],
                         "language" : "English"
                     },
                     {
@@ -77,17 +47,7 @@
                         "link" : "https://www.coursera.org/learn/food-and-health",
                         "description" : "In this course, learners will be given the information and practical skills they need to begin optimizing the way they eat. This course will shift the focus away from reductionist discussions about nutrients and move, instead, towards practical discussions about real food and the environment in which we consume it. By the end of this course, learners should have the tools they need to distinguish between foods that will support their health and those that threaten it. In addition, we will present a compelling rationale for a return to simple home cooking, an integral part of our efforts to live longer, healthier lives.",
                         "complexity" : 3,
-                        "course_categories" :[ 2, 3 ],
-                        "language" : "English"
-                    },
-                    {
-                        "provider_id" : 1,
-                        "name" : "Science of Exercise",
-                        "author" : "University of Colorado Boulder",
-                        "link" : "https://www.coursera.org/learn/science-exercise",
-                        "description" : "Learners who complete Science of Exercise will have an improved physiological understanding of how your body responds to exercise, and will be able to identify behaviors, choices, and environments that impact your health and training. You will explore a number of significant adjustments required by your body in order to properly respond to the physical stress of exercise, including changes in carbohydrate, fat and protein metabolism, nutritional considerations, causes of muscle soreness & fatigue, and the effectiveness and dangers of performance enhancing drugs.",
-                        "complexity" : 3,
-                        "course_categories" :[1, 2, 4 , 5 ,6],
+                        "course_categories" :[ 2 ],
                         "language" : "English"
                     },
                     {
@@ -97,7 +57,7 @@
                         "link" : "https://www.coursera.org/learn/machine-learning",
                         "description" : "This course provides a broad introduction to machine learning, datamining, and statistical pattern recognition. Topics include: (i) Supervised learning (parametric/non-parametric algorithms, support vector machines, kernels, neural networks). (ii) Unsupervised learning (clustering, dimensionality reduction, recommender systems, deep learning). (iii) Best practices in machine learning (bias/variance theory; innovation process in machine learning and AI).",
                         "complexity" : 1,
-                        "course_categories" :[ 3, 5 ],
+                        "course_categories" :[ 3 ],
                         "language" : "English"
                     },
                     {
@@ -107,13 +67,43 @@
                         "link" : "https://www.coursera.org/specializations/python",
                         "description" : "This Specialization builds on the success of the Python for Everybody course and will introduce fundamental programming concepts including data structures, networked application program interfaces, and databases, using the Python programming language. In the Capstone Project, you’ll use the technologies learned throughout the Specialization to design and create your own applications for data retrieval, processing, and visualization.",
                         "complexity" : 1,
-                        "course_categories" :[ 4, 6 ],
+                        "course_categories" :[ 4 ],
                         "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Introductions to Data Science in Python",
+                        "author" : "University of Michigan",
+                        "link" : "https://www.coursera.org/learn/python-data-analysis",
+                        "description" : "This course will introduce the learner to the basics of the python programming environment, including fundamental python programming techniques such as lambdas, reading and manipulating csv files, and the numpy library. The course will introduce data manipulation and cleaning techniques using the popular python pandas data science library and introduce the abstraction of the Series and DataFrame as the central data structures for data analysis, along with tutorials on how to use functions such as groupby, merge, and pivot tables effectively. By the end of this course, students will be able to take tabular data, clean it, manipulate it, and run basic inferential statistical analyses.",
+                        "complexity" : 3,
+                        "course_categories" :[ 3, 4 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Data Science Math Skills",
+                        "author" : "Duke University",
+                        "link" : "https://www.coursera.org/learn/datasciencemathskills",
+                        "description" : "Data science courses contain math—no avoiding that! This course is designed to teach learners the basic math you will need in order to be successful in almost any data science math course and was created for learners who have basic math skills but may not have taken algebra or pre-calculus. Data Science Math Skills introduces the core math that data science is built upon, with no extra complexity, introducing unfamiliar ideas and math symbols one-at-a-time.\n\nLearners who complete this course will master the vocabulary, notation, concepts, and algebra rules that all data scientists must know before moving on to more advanced material.",
+                        "complexity" : 1,
+                        "course_categories" :[ 3, 5 ],
+                        "language" : "English"
+                    },
+                    {
+                        "provider_id" : 1,
+                        "name" : "Машинное обучение и анализ данных",
+                        "author" : "Moscow Institute of Physics and Teachnology",
+                        "link" : "https://www.coursera.org/specializations/machine-learning-data-analysis",
+                        "description" : "Мы покажем, как проходит полный цикл анализа, от сбора данных до выбора оптимального решения и оценки его качества. Вы научитесь пользоваться современными аналитическими инструментами и адаптировать их под особенности конкретных задач.\n\nВ рамках специализации вы освоите основные темы, необходимые в работе с большим массивом данных, в т.ч. современные методы классификации и регрессии, поиск структуры в данных, проведение экспериментов, построение выводов, базовая фундаментальная математика, основы программирования на Python.\n\nМы разберём, как построить рекомендательную систему, оценить эмоциональную окраску текста, спрогнозировать спрос на товар, оценить вероятность клика по рекламе и т.д.\n\nВ финале вам потребуется выполнить проект собственной системы, решающей любую актуальную для бизнеса задачу. Результатом будет наглядная работающая модель, которую вы сможете использовать в вашей повседневной работе или продемонстрировать на собеседовании.",
+                        "complexity" : 3,
+                        "course_categories" :[ 3, 4, 6 ],
+                        "language" : "Russian"
                     }
                 ],
     "categories" : [
         {
-            "name": "Physical Science and Engineering",
+            "name": "Physics and Astronomy",
             "description": ""
         },
         {
@@ -125,16 +115,16 @@
             "description": ""
         },
         {
-            "name": "Math",
+            "name": "Python Programming",
             "description": ""
         },
         {
-            "name": "Geometry",
+        	"name": "Probability Theory",
             "description": ""
         },
         {
-            "name": "Programming",
+        	"name": "Machine Learning",
             "description": ""
-        }        
+        }
     ]
 }
