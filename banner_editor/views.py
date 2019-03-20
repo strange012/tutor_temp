@@ -160,7 +160,7 @@ comment_schema = {
     'properties' : {
         'message' : {'type' : 'string'}
     },
-    'required' : ['name', 'teacher_id', 'course_id']
+    'required' : ['message']
 }
 def user_id_match(f=None):
     if f is None:
