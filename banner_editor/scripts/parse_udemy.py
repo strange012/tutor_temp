@@ -10,7 +10,8 @@ from sqlalchemy import engine_from_config
 from pyramid.scripts.common import parse_vars
 from ..models import (
     DBSession,
-    CourseCategory
+    CourseCategory,
+    Course
 )
 
 from ..lib.udemy_api import (
@@ -36,33 +37,18 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)    
 
-    req_params = {
-        'page' : 1,
-        'page_size' : 3,
-        'language' : 'en',
-        'search' : 'cook'
-    }
-    udemy_settings = {
-        'api' : settings['udemy.api.url'],
-        'id' : settings['udemy.id'],
-        'secret' : settings['udemy.secret'],
-        'url' : settings['udemy.url']
-    }
-    udemy = UdemyAPI(udemy_settings)
+    udemy = UdemyAPI(settings)
 
-    ids = udemy.get_course_ids(req_params)
-    
-    for iid in ids:
+    ids = udemy.get_course_ids('skills')
+    for index, iid in enumerate(ids):
+        print("Loading course #{}...".format(index + 1))
+        course_id = udemy.get_parsed_course(iid)
+        comments = udemy.get_parsed_course_comments(iid)
         with transaction.manager:
-            course, cats = udemy.get_parsed_course(iid)
-            DBSession.add(course)
+            course = DBSession.query(Course).get(course_id)
+            course.comments.extend(comments)
             DBSession.flush()
-            for cat in cats:
-                newcat = DBSession.query(CourseCategory).filter(CourseCategory.name == cat.name).first()
-                if newcat:
-                    course.course_categories.append(newcat)
-                else:
-                    course.course_categories.append(cat)
+        print("Course #{} is loaded!".format(index + 1))
 
 
 

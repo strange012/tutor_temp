@@ -189,13 +189,28 @@ class Comment(Base):
     id = Column(Integer, primary_key=True)
     course_id = Column(Integer, ForeignKey('course.id'))
     consumer_id = Column(Integer, ForeignKey('consumer.id'))
+    name = Column(String, nullable=True)
     message = Column(String)
 
+    date_created = Column(
+        DateTime,
+        default=func.now(),
+        nullable=False,
+        server_default=func.now()
+    )
+    date_edited = Column(
+        DateTime,
+        default=func.now(),
+        nullable=False,
+        server_default=func.now(),
+        onupdate=func.now()
+    )
     def to_json(self):
         return {
             'comment_id' : self.id,
             'course_id' : self.course_id,
             'message' : self.message,
+            'date_created' : self.date_created,
             'consumer_id' : self.consumer_id,
-            'consumer_name' : self.consumer.first_name + ' ' + self.consumer.second_name
+            'consumer_name' : self.consumer.first_name + ' ' + self.consumer.second_name if self.consumer_id else self.name
         }
