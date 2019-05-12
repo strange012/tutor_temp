@@ -85,6 +85,17 @@ def main(argv=sys.argv):
             website='www.dummy-lessons.com',
             about='Coursera'
         )
+        provider = Provider(
+            email='udemy@gmail.com',
+            password=hash_password('udemy'),
+            group='provider',
+            name='Udemy',
+            website='https://www.udemy.com',
+            about='Udemy is a platform or marketplace for online learning. \
+                Unlike academic MOOC programs driven by traditional collegiate coursework, \
+                Udemy provides a platform for experts of any kind to create courses which can \
+                be offered to the public, either at no charge or for a tuition fee.'
+        )
         consumer = Consumer(
             email='consumer@host.mail',
             password=hash_password('lol'),
