@@ -5264,3 +5264,5 @@ Traceback (most recent call last):
     if request.json['provider_id'] > 0:
 KeyError: 'provider_id'
 2019-05-13 23:55:18,220 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-14 02:18:07,225 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-14 02:18:07,228 WARNI [waitress.queue][MainThread] Task queue depth is 1

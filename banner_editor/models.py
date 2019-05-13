@@ -135,7 +135,7 @@ class Course(Base, Image):
             'complexity' : self.complexity,
             'language' : self.language,
             'lessons' : [lesson.id for lesson in self.lessons],
-            'course_categories' : [cat.id for cat in self.course_categories],
+            'course_categories' : {cat.id : cat.name for cat in self.course_categories},
             'favs' : [consumer.id for consumer in self.consumers_fav],
             'bookmarks' : [consumer.id for consumer in self.consumers_bookmark],
             'image' : self.static_path(PictureSize.course_icon)
