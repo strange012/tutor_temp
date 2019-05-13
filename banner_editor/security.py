@@ -18,11 +18,14 @@ from models import (
     CourseCategory,
     Image
 )
+
+from pyramid.security import ALL_PERMISSIONS
 from lib.util import PictureSize
 
 from pyramid.security import (
     Allow
 )
+
 
 class ContentTypePredicate(object):
     def __init__(self, val, config):
@@ -49,12 +52,9 @@ class ContentTypePredicate(object):
 class Root(object):
     __name__ = ''
     __acl__ = [
-        (Allow, 'group:admin', 'edit'),
-        (Allow, 'group:admin', 'add'),
-        (Allow, 'group:admin', 'view'),
-        (Allow, 'group:provider', 'add'),
-        (Allow, 'group:provider', 'view'),
-        (Allow, 'group:consumer', 'view')
+        (Allow, 'admin', ALL_PERMISSIONS),
+        (Allow, 'provider', ['add', 'view']),
+        (Allow ,'consumer', ['view'])
     ]
 
     def __init__(self, request):
@@ -155,8 +155,7 @@ class Provider(User):
             'email' : self.email,
             'name' : self.name,
             'website' : self.website,
-            'about' : self.about,
-            'courses' : [course.id for course in self.courses]
+            'about' : self.about
         }
 
 
@@ -171,8 +170,19 @@ def check_password(expected_hash, pw):
     return False
 
 
-def groupfinder(email, request):
-    user = DBSession.query(User).filter(User.email == email).first()
+def groupfinder(user_id, request):
+    user = DBSession.query(User).get(user_id)
     if user:
-        return ['group:' + user.group]
+        return [user.group]
     return None
+
+def add_cors_headers_response_callback(event):
+    def cors_headers(request, response):
+        response.headers.update({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Max-Age': '1728000',
+        })
+    event.request.add_response_callback(cors_headers)

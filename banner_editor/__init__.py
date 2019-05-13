@@ -4,6 +4,7 @@ from sqlalchemy import engine_from_config
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.events import NewRequest
 
 import os
 
@@ -15,7 +16,8 @@ from .models import (
 from .security import (
     groupfinder,
     Root,
-    ContentTypePredicate
+    ContentTypePredicate,
+    add_cors_headers_response_callback
 )
 
 def main(global_config, **settings):
@@ -34,13 +36,17 @@ def main(global_config, **settings):
     Base.metadata.bind = engine
     with Configurator(settings=settings) as config:
 
+        config.include('.cors')
+        config.include('pyramid_jwt')
+        config.add_cors_preflight_handler()
+        
         config.add_static_view('static', 'static', cache_max_age=3600)
         config.add_view_predicate('content_type', ContentTypePredicate)
 
         config.add_route('get_id', '/')
 
         config.add_route('login', '/login')
-        config.add_route('logout', '/logout')
+        # config.add_route('logout', '/logout')
 
         config.add_route('consumer_add', '/consumer/add')
         config.add_route('consumer_edit', '/consumer/{id}/edit')
@@ -97,9 +103,13 @@ def main(global_config, **settings):
         config.add_route('comment_view', 'comment/{comment_id}/view')
 
 
+        # config.add_subscriber(add_cors_headers_response_callback, NewRequest)
         config.set_root_factory(Root)
         config.set_session_factory(session_factory)
-        config.set_authentication_policy(authn_policy)
+        # config.set_authentication_policy(authn_policy)
+        config.set_jwt_authentication_policy('tutor_secret',
+                                            callback=groupfinder,
+                                            auth_type='Bearer')
         config.set_authorization_policy(authz_policy)
 
         config.scan()

@@ -139,7 +139,7 @@ def main(argv=sys.argv):
 
         course = Course(
             name='Naturalistic fighting',
-            provider_id=provider.id,
+            provider_id=1,
             description='We will teach you how to fight with nature',
             complexity=4,
             language='English'

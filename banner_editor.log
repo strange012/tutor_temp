@@ -5162,3 +5162,105 @@ FROM consumer_fav_courses, "user" JOIN consumer ON "user".id = consumer.id
 WHERE %(param_1)s = consumer_fav_courses.course_id AND consumer.id = consumer_fav_courses.consumer_id]
 [parameters: {'param_1': 16}]
 (Background on this error at: http://sqlalche.me/e/f405)
+2019-05-13 08:29:25,375 ERROR [waitress][waitress] Exception when serving /login
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 271, in __call__
+    return response(environ, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/webob/response.py", line 1305, in __call__
+    start_response(self.status, headerlist)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 428, in start_response
+    'Header value %r is not a string in %r' % (v, (k, v))
+AssertionError: Header value ('Content-Type,Date,Content-Length,Authorization,X-Request-ID,Set-Cookie', 'Cookie') is not a string in ('Access-Control-Expose-Headers', ('Content-Type,Date,Content-Length,Authorization,X-Request-ID,Set-Cookie', 'Cookie'))
+2019-05-13 21:51:07,707 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 210, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 679, in course_filter
+    if request.json['provider_id'] > 0:
+KeyError: 'provider_id'
+2019-05-13 22:46:07,520 ERROR [waitress][waitress] Exception when serving /course/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 211, in decorated_function
+    return f(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 680, in course_filter
+    if request.json['provider_id'] > 0:
+KeyError: 'provider_id'
+2019-05-13 23:55:18,220 WARNI [waitress.queue][MainThread] Task queue depth is 1

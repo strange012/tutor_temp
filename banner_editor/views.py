@@ -6,15 +6,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import func, and_, text
 
 from functools import partial, wraps
-
+from webhelpers import paginate
 from jsonschema import validate, exceptions
 
 from pyramid.view import forbidden_view_config
 from pyramid.security import (
     remember,
     forget,
-    Allow,
-    unauthenticated_userid
+    Allow
 )
 
 from .models import (
@@ -122,7 +121,8 @@ course_schema = {
 course_filter_schema = {
     'type' : 'object',
     'properties' : {
-        'search_string' : {'type' : 'string'}
+        'search_string' : {'type' : 'string'},
+        'provider_id' : {'type' : 'number'}
     },
     'required' : ['search_string']
 }
@@ -176,7 +176,7 @@ def user_id_match(f=None):
         if not user:
             request.response.status = 400
             return {'msg' :  MESSAGES['id']}
-        if (user.group != 'admin') and (user.email != unauthenticated_userid(request)):
+        if (user.group != 'admin') and (user.id != request.jwt_claims['sub']):
             request.response.status = 403
             return {'msg' :  MESSAGES['access']}
         return f(request)
@@ -241,13 +241,14 @@ def image_match(f=None):
 @view_config(route_name='get_id', permission='view', renderer='json')
 def get_id(request):
     try:
-        user = DBSession.query(User).filter(User.email == unauthenticated_userid(request)).first()
+        user = DBSession.query(User).get(request.jwt_claims['sub'])
         request.response.status = 200
         return {'id' : user.id}
     except SQLAlchemyError as e:
         LOG.exception(e.message)
         request.response.status = 500
         return {'msg' :  MESSAGES['db']}
+
 
 @view_config(route_name='login', renderer='json')
 def login(request):
@@ -256,22 +257,24 @@ def login(request):
         user = DBSession.query(User).filter(User.email == request.json['email']).first()
         if user:
             if check_password(user.password, request.json['password']):
-                headers = remember(request, request.json['email'])
-                request.response.headerlist.extend(headers)
                 request.response.status = 200
-                return {'id' : user.id}
+                return {
+                    'id' : user.id,
+                    'group' : user.group,
+                    'token' : request.create_jwt_token(user.id)
+                }
     except:
         request.response.status = 400
         return {'msg' : MESSAGES['request']}
     request.response.status = 403
     return {'msg' :  MESSAGES['login']}
 
-@view_config(route_name='logout', permission='view', renderer='json')
-def logout(request):
-    headers = forget(request)
-    request.response.headerlist.extend(headers)
-    request.response.status = 200
-    return {'msg' :  MESSAGES['ok']}
+# @view_config(route_name='logout', permission='view', renderer='json')
+# def logout(request):
+#     headers = forget(request)
+#     request.response.headerlist.extend(headers)
+#     request.response.status = 200
+#     return {'msg' :  MESSAGES['ok']}
 
 @view_config(route_name='consumer_add', renderer='json')
 @json_match(schema=consumer_schema)
@@ -673,9 +676,12 @@ def course_image_remove(request):
 @view_config(route_name='course_filter', permission='view', renderer='json')
 @json_match(schema=course_filter_schema)
 def course_filter(request):
-    courses = DBSession.query(Course).filter(func.lower(Course.name).contains(request.json['search_string'].lower())).all()
+    courses = DBSession.query(Course).filter(func.lower(Course.name).contains(request.json['search_string'].lower()))
+    if 'provider_id' in request.json.keys():
+        courses = courses.filter(Course.provider_id == request.json['provider_id'])
+    
     request.response.status = 200
-    return [course.to_json() for course in courses]
+    return [course.to_json() for course in courses.all()]
 
 @view_config(route_name='course_category_add', permission='edit', renderer='json')
 @json_match(schema=course_category_schema)
@@ -839,7 +845,7 @@ def comment_add(request):
     comment = Comment()
     comment.message = request.json['message']
     comment.course_id = request.matchdict['course_id']
-    comment.consumer_id = DBSession.query(Consumer).filter(Consumer.email == unauthenticated_userid(request)).first().id
+    comment.consumer_id = request.jwt_claims['sub']
 
     DBSession.add(comment)
     DBSession.flush()    
@@ -851,8 +857,8 @@ def comment_add(request):
 @obj_id_match(oid='comment_id', Obj=Comment)
 def comment_edit(request):
     comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
-    user = unauthenticated_userid(request)
-    if (comment.consumer.email != user) and (comment.course.provider.email != user):
+    user_id = request.jwt_claims['sub']
+    if (comment.consumer_id != user_id) and (comment.course.provider_id != user_id):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
 
@@ -865,8 +871,8 @@ def comment_edit(request):
 @obj_id_match(oid='comment_id', Obj=Comment)
 def comment_remove(request):
     comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
-    user = unauthenticated_userid(request)
-    if (comment.consumer.email != user) and (comment.course.provider.email != user):
+    user_id = request.jwt_claims['sub']
+    if (comment.consumer_id != user_id) and (comment.course.provider_id != user_id):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
     try:

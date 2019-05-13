@@ -31,7 +31,7 @@ class UdemyAPI():
     def get_course_ids(self, search):
         params = {
             'page' : 1,
-            'page_size' : 2,
+            'page_size' : 7,
             'language' : 'en',
             'search' : search
         }
