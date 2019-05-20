@@ -39,7 +39,8 @@ def main(global_config, **settings):
         config.include('.cors')
         config.include('pyramid_jwt')
         config.add_cors_preflight_handler()
-        
+        static_path = os.path.join(settings['work.directory'], 'banner_editor/static')
+	print(static_path)
         config.add_static_view('static', 'static', cache_max_age=3600)
         config.add_view_predicate('content_type', ContentTypePredicate)
 

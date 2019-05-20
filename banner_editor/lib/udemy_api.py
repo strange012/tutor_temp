@@ -82,10 +82,8 @@ class UdemyAPI():
 
             course.image = filename
             DBSession.flush()
-            
 
             size = PictureSize.course_icon
-
             image = Image.open(file_path)
             w = image.width
             h = image.height
