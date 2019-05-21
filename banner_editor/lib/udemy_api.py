@@ -31,7 +31,7 @@ class UdemyAPI():
     def get_course_ids(self, search):
         params = {
             'page' : 1,
-            'page_size' : 7,
+            'page_size' : 100,
             'language' : 'en',
             'search' : search
         }
@@ -96,7 +96,7 @@ class UdemyAPI():
     def get_parsed_course_comments(self, iid):
         params = {
             'page' : 1,
-            'page_size' : 10,
+            'page_size' : 2,
             'is_text_review' : True,
             'fields[course_review]' : 'content,created,user'
         }

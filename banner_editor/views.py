@@ -41,6 +41,7 @@ from decimal import Decimal
 import os
 import shutil
 import logging
+import math
 
 MESSAGES = {
     'db': 'Database operation error',
@@ -676,12 +677,20 @@ def course_image_remove(request):
 @view_config(route_name='course_filter', permission='view', renderer='json')
 @json_match(schema=course_filter_schema)
 def course_filter(request):
-    courses = DBSession.query(Course).filter(func.lower(Course.name).contains(request.json['search_string'].lower()))
+    PAGESIZE = 5
+    courses = DBSession.query(Course).filter(func.lower(Course.name).contains(request.json['search_string'].lower())).order_by(Course.date_created.desc())
     if 'provider_id' in request.json.keys():
         courses = courses.filter(Course.provider_id == request.json['provider_id'])
     
+    count = courses.count()
+    page = request.json['page'] if 'page' in request.json.keys() else 1
     request.response.status = 200
-    return [course.to_json() for course in courses.all()]
+    return {
+        'page' : page,
+        'data' : [course.to_json() for course in courses.offset(PAGESIZE * (page - 1)).limit(PAGESIZE).all()],
+        'pages_count' : int(math.ceil(count / float(PAGESIZE)))
+    }
+
 
 @view_config(route_name='course_category_add', permission='edit', renderer='json')
 @json_match(schema=course_category_schema)

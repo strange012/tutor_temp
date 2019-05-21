@@ -41,7 +41,7 @@ def usage(argv):
 
 
 def create_subdirectories(folder):
-    symbs = string.ascii_letters + string.digits + '?'
+    symbs = string.ascii_letters + string.digits + '*'
     for symb in symbs:
         os.mkdir(os.path.join(folder, symb))
 

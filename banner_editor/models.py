@@ -58,9 +58,9 @@ class Image(object):
             'static',
             self.__tablename__,
             self.path_string()[0] if (self.path_string()[0] in (
-                string.ascii_letters + string.digits)) else '?',
+                string.ascii_letters + string.digits)) else '*',
             self.path_string()[1] if (self.path_string()[1] in (
-                string.ascii_letters + string.digits)) else '?',
+                string.ascii_letters + string.digits)) else '*',
             str(self.id)
         )
         if not os.path.isdir(path):
@@ -73,9 +73,9 @@ class Image(object):
                 'static',
                 self.__tablename__,
                 self.path_string()[0] if (self.path_string()[0] in (
-                    string.ascii_letters + string.digits)) else '?',
+                    string.ascii_letters + string.digits)) else '*',
                 self.path_string()[1] if (self.path_string()[1] in (
-                    string.ascii_letters + string.digits)) else '?',
+                    string.ascii_letters + string.digits)) else '*',
                 str(self.id)
             )
             full_path = self.full_path()
