@@ -5894,3 +5894,84 @@ TypeError: unsupported operand type(s) for -: 'unicode' and 'int'
 2019-05-21 22:02:48,013 WARNI [waitress.queue][MainThread] Task queue depth is 2
 2019-05-21 22:02:48,016 WARNI [waitress.queue][MainThread] Task queue depth is 1
 2019-05-21 22:02:48,369 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 18:53:57,879 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 18:54:13,267 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 18:54:13,268 WARNI [waitress.queue][MainThread] Task queue depth is 2
+2019-05-22 18:54:13,268 WARNI [waitress.queue][MainThread] Task queue depth is 3
+2019-05-22 18:58:47,259 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 19:56:22,113 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 19:56:22,116 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 19:56:22,117 WARNI [waitress.queue][MainThread] Task queue depth is 2
+2019-05-22 20:40:42,412 ERROR [waitress][waitress] Exception when serving /course_category/view
+Traceback (most recent call last):
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/channel.py", line 336, in service
+    task.service()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 175, in service
+    self.execute()
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/waitress/task.py", line 452, in execute
+    app_iter = self.channel.server.application(env, start_response)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 270, in __call__
+    response = self.execution_policy(environ, self)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 279, in default_execution_policy
+    return request.invoke_exception_view(reraise=True)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 768, in invoke_exception_view
+    reraise_(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 277, in default_execution_policy
+    return router.invoke_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 249, in invoke_request
+    response = handle_request(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 171, in tm_tween
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid_tm/__init__.py", line 136, in tm_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 43, in excview_tween
+    response = _error_handler(request, exc)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 17, in _error_handler
+    reraise(*exc_info)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/tweens.py", line 41, in excview_tween
+    response = handler(request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/router.py", line 148, in handle_request
+    registry, request, context, context_iface, view_name
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/view.py", line 657, in _call_view
+    response = view_callable(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 325, in secured_view
+    return view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 436, in rendered_view
+    result = view(context, request)
+  File "/home/master/banner_editor/venv/lib/python2.7/site-packages/pyramid/viewderivers.py", line 144, in _requestonly_view
+    response = view(request)
+  File "/home/master/banner_editor/banner_editor/views.py", line 751, in course_categories_view
+    return {cat.id : cat.name for cat in self.course_categories}
+NameError: global name 'self' is not defined
+2019-05-22 20:43:40,722 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 20:43:46,994 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 20:44:40,063 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 20:46:13,272 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 20:48:02,143 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 20:49:17,886 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:07:39,318 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:10:30,107 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:14:47,480 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:25:19,320 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:29:30,303 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:29:30,318 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:33:15,418 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:52:26,535 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:52:52,115 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:53:33,044 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 21:56:18,556 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:03:12,530 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:04:17,780 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:10:05,484 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:10:12,944 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:13:33,055 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:14:45,839 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:15:07,280 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:15:07,292 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:21:55,141 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:22:25,300 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:22:25,311 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:22:45,484 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 22:52:42,883 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 23:03:34,704 WARNI [waitress.queue][MainThread] Task queue depth is 1
+2019-05-22 23:20:12,837 WARNI [waitress.queue][MainThread] Task queue depth is 1

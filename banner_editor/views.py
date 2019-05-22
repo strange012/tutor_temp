@@ -113,7 +113,7 @@ course_schema = {
         'link' : {'type' : 'string'},
         'description' : {'type' : 'string'},
         'language' : {'type' : 'string', 'enum' : LANGUAGES},
-        'complexity' : {'type' : 'number'},
+        'complexity' : {'type' : ['number', 'null']},
         'course_categories' : {'type' : 'array'}
     },
     'required' : ['name', 'author', 'link', 'description', 'complexity', 'course_categories', 'language']
@@ -170,14 +170,14 @@ def user_id_match(f=None):
     @wraps(f)
     def decorated_function(request):
         try:
-            user = DBSession.query(User).get(request.matchdict['id'])
+            user = DBSession.query(User).get(int(request.matchdict['id']))
         except SQLAlchemyError as e:
             request.response.status = 400
             return {'msg' :  MESSAGES['id']}
         if not user:
             request.response.status = 400
             return {'msg' :  MESSAGES['id']}
-        if (user.group != 'admin') and (user.id != request.jwt_claims['sub']):
+        if (user.group != 'admin') and (user.id != int(request.jwt_claims['sub'])):
             request.response.status = 403
             return {'msg' :  MESSAGES['access']}
         return f(request)
@@ -242,7 +242,7 @@ def image_match(f=None):
 @view_config(route_name='get_id', permission='view', renderer='json')
 def get_id(request):
     try:
-        user = DBSession.query(User).get(request.jwt_claims['sub'])
+        user = DBSession.query(User).get(int(request.jwt_claims['sub']))
         request.response.status = 200
         return {'id' : user.id}
     except SQLAlchemyError as e:
@@ -301,7 +301,7 @@ def consumer_add(request):
 @user_id_match
 @json_match(schema=consumer_schema)
 def consumer_edit(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     if DBSession.query(User).filter(User.email == request.json['email']).filter(User.id != consumer.id).one_or_none():
         request.response.status = 403
         return {'msg' :  MESSAGES['email']}
@@ -336,7 +336,7 @@ def consumer_edit(request):
 @view_config(route_name='consumer_remove', permission='view', renderer='json')
 @user_id_match
 def consumer_remove(request):   
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     try:
         DBSession.delete(consumer)
         DBSession.flush()
@@ -350,14 +350,14 @@ def consumer_remove(request):
 @view_config(route_name='consumer_view', permission='view', renderer='json')
 @user_id_match
 def consumer_view(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     request.response.status = 200
     return consumer.to_json()
 
 @view_config(route_name='consumer_favs_view', permission='view', renderer='json')
 @user_id_match
 def consumer_favs_view(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     request.response.status = 200
     return [fav.to_json() for fav in consumer.fav_courses]
 
@@ -365,7 +365,7 @@ def consumer_favs_view(request):
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def consumer_fav_add(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     if course in consumer.fav_courses:
         request.response.status = 403
@@ -384,7 +384,7 @@ def consumer_fav_add(request):
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def consumer_fav_remove(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     if course not in consumer.fav_courses:
         request.response.status = 403
@@ -401,7 +401,7 @@ def consumer_fav_remove(request):
 @view_config(route_name='consumer_bookmarks_view', permission='view', renderer='json')
 @user_id_match
 def consumer_bookmarks_view(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     request.response.status = 200
     return [bookmark.to_json() for bookmark in consumer.bookmarks]
 
@@ -409,7 +409,7 @@ def consumer_bookmarks_view(request):
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def consumer_bookmark_add(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     if course in consumer.bookmarks:
         request.response.status = 403
@@ -427,7 +427,7 @@ def consumer_bookmark_add(request):
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def consumer_bookmark_remove(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     course = DBSession.query(Course).get(request.matchdict['course_id'])
     if course not in consumer.bookmarks:
         request.response.status = 403
@@ -447,7 +447,7 @@ import json
 @view_config(route_name='consumer_feed', renderer='json')
 @user_id_match
 def consumer_feed(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     interests = [x.id for x in consumer.interests]
     q = DBSession.query(Course.id, course_category_course.c.course_category_id)\
         .filter(Course.language.in_(consumer.languages))\
@@ -466,7 +466,7 @@ def consumer_feed(request):
 @user_id_match
 @image_match
 def consumer_image_add(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     image = request.body_file
     filename = 'original.' + request.content_type[6:]
     consumer.image = filename
@@ -484,7 +484,7 @@ def consumer_image_add(request):
 @view_config(route_name='consumer_image_remove', permission='view', renderer='json')
 @user_id_match
 def consumer_image_remove(request):
-    consumer = DBSession.query(Consumer).get(request.matchdict['id'])
+    consumer = DBSession.query(Consumer).get(int(request.matchdict['id']))
     consumer.image = None
     DBSession.flush()
     request.response.status = 200
@@ -512,7 +512,7 @@ def provider_add(request):
 @user_id_match
 @json_match(schema=provider_schema)
 def provider_edit(request):
-    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    provider = DBSession.query(Provider).get(int(request.matchdict['id']))
     if DBSession.query(User).filter(User.email == request.json['email']).filter(User.id != provider.id).one_or_none():
         request.response.status = 403
         return {'msg' :  MESSAGES['email']}
@@ -528,7 +528,7 @@ def provider_edit(request):
 @view_config(route_name='provider_remove', permission='add', renderer='json')
 @user_id_match
 def provider_remove(request):   
-    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    provider = DBSession.query(Provider).get(int(request.matchdict['id']))
     try:
         DBSession.delete(provider)
         DBSession.flush()
@@ -542,7 +542,7 @@ def provider_remove(request):
 @view_config(route_name='provider_view', permission='view', renderer='json')
 def provider_view(request): 
     try:
-        provider = DBSession.query(Provider).get(request.matchdict['id'])
+        provider = DBSession.query(Provider).get(int(request.matchdict['id']))
     except SQLAlchemyError as e:
         request.response.status = 400
         return {'msg' :  MESSAGES['id']}
@@ -563,7 +563,7 @@ def course_add(request):
     course.author = request.json['author']
     course.language = request.json['language']
     course.link = request.json['link']
-    course.provider_id = request.matchdict['id']
+    course.provider_id = int(request.matchdict['id'])
     DBSession.add(course)
     DBSession.flush()
 
@@ -580,7 +580,7 @@ def course_add(request):
 @obj_id_match(oid='course_id', Obj=Course)
 def course_edit(request):
     course = DBSession.query(Course).get(request.matchdict['course_id'])
-    if course.provider_id is not request.matchdict['id']:
+    if course.provider_id is not int(request.matchdict['id']):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
     course.name = request.json['name']
@@ -616,9 +616,9 @@ def course_edit(request):
 @user_id_match
 @obj_id_match(oid='course_id', Obj=Course)
 def course_remove(request):
-    provider = DBSession.query(Provider).get(request.matchdict['id'])
+    provider = DBSession.query(Provider).get(int(request.matchdict['id']))
     course = DBSession.query(Course).get(request.matchdict['course_id'])
-    if course.provider_id is not request.matchdict['id']:
+    if course.provider_id is not int(request.matchdict['id']):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
     try:
@@ -644,7 +644,7 @@ def course_view(request):
 @image_match
 def course_image_add(request):
     course = DBSession.query(Course).get(request.matchdict['course_id'])
-    if course.provider_id is not int(request.matchdict['id']):
+    if course.provider_id is not int(int(request.matchdict['id'])):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
     image = request.body_file
@@ -666,7 +666,7 @@ def course_image_add(request):
 @obj_id_match(oid='course_id', Obj=Course)
 def course_image_remove(request):
     course = DBSession.query(Course).get(request.matchdict['course_id'])
-    if course.provider_id is not request.matchdict['id']:
+    if course.provider_id is not int(request.matchdict['id']):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
     course.image = None
@@ -748,7 +748,7 @@ def course_category_courses_view(request):
 def course_categories_view(request):
     course_categories = DBSession.query(CourseCategory).all()
     request.response.status = 200
-    return [cat.to_json() for cat in course_categories]
+    return [{"id" : cat.id, "name" : cat.name } for cat in course_categories]
 
 
 @view_config(route_name='teacher_add', permission='add', renderer='json')
@@ -854,7 +854,7 @@ def comment_add(request):
     comment = Comment()
     comment.message = request.json['message']
     comment.course_id = request.matchdict['course_id']
-    comment.consumer_id = request.jwt_claims['sub']
+    comment.consumer_id = int(request.jwt_claims['sub'])
 
     DBSession.add(comment)
     DBSession.flush()    
@@ -866,7 +866,7 @@ def comment_add(request):
 @obj_id_match(oid='comment_id', Obj=Comment)
 def comment_edit(request):
     comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
-    user_id = request.jwt_claims['sub']
+    user_id = int(request.jwt_claims['sub'])
     if (comment.consumer_id != user_id) and (comment.course.provider_id != user_id):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
@@ -880,7 +880,7 @@ def comment_edit(request):
 @obj_id_match(oid='comment_id', Obj=Comment)
 def comment_remove(request):
     comment = DBSession.query(Comment).get(request.matchdict['comment_id'])
-    user_id = request.jwt_claims['sub']
+    user_id = int(request.jwt_claims['sub'])
     if (comment.consumer_id != user_id) and (comment.course.provider_id != user_id):
         request.response.status = 403
         return {'msg' :  MESSAGES['access']}
