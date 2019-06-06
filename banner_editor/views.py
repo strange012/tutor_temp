@@ -904,9 +904,14 @@ def comment_view(request):
 @view_config(route_name='course_comments_view', permission='view', renderer='json')
 @obj_id_match(oid='course_id', Obj=Course)
 def course_comments_view(request):
-    course = DBSession.query(Course).get(request.matchdict['course_id'])
+    PAGESIZE = 5
+    comments = DBSession.query(Comment).filter(Comment.course_id == request.matchdict['course_id'])
+
+    count = comments.count()
+    page = request.json['page'] if 'page' in request.json.keys() else 1
     request.response.status = 200
     return {
-        'count' : len(course.comments),
-        'comments' : [comment.to_json() for comment in course.comments]
+        'page' : page,
+        'data' : [comment.to_json() for comment in comments.offset(PAGESIZE * (page - 1)).limit(PAGESIZE).all()],
+        'pages_count' : int(math.ceil(count / float(PAGESIZE)))
     }

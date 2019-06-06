@@ -39,7 +39,7 @@ def main(argv=sys.argv):
 
     udemy = UdemyAPI(settings)
 
-    ids = udemy.get_course_ids('to')
+    ids = udemy.get_course_ids('physics')
     for index, iid in enumerate(ids):
         print("Loading course #{}...".format(index + 1))
         course_id = udemy.get_parsed_course(iid)

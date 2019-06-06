@@ -210,7 +210,7 @@ class Comment(Base):
             'comment_id' : self.id,
             'course_id' : self.course_id,
             'message' : self.message,
-            'date_created' : self.date_created,
+            'date_created' : self.date_created.strftime("%Y-%m-%d %H:%M:%S"),
             'consumer_id' : self.consumer_id,
             'consumer_name' : self.consumer.first_name + ' ' + self.consumer.second_name if self.consumer_id else self.name
         }
